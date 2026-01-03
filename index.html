@@ -44,115 +44,94 @@
             padding: 0 20px 100px;
         }
 
-        /* --- НОВЫЙ СТИЛЬ ШАПКИ (HUD SYSTEM) --- */
+        /* --- НОВЫЙ СТИЛЬ ШАПКИ (RPG TYPING) --- */
         header.profile-card {
             display: flex;
-            flex-direction: row; /* Строго в ряд */
-            align-items: flex-start; /* Выравнивание по верху, а не по центру */
+            flex-direction: row;
+            align-items: flex-start;
             justify-content: center;
-            gap: 40px; /* Отступ между аватаркой и текстом */
+            gap: 40px;
             
             max-width: 900px;
             margin: 60px auto 50px;
             padding: 35px;
             
-            background: rgba(5, 15, 10, 0.85); /* Более плотный фон */
+            background: rgba(5, 15, 10, 0.9);
             border: 1px solid rgba(0, 255, 163, 0.3);
             border-radius: 16px;
-            
-            /* Эффект свечения рамки */
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 
-                        inset 0 0 50px rgba(0, 255, 163, 0.05);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 50px rgba(0, 255, 163, 0.05);
             backdrop-filter: blur(12px);
         }
         
-        /* Контейнер аватара */
         .avatar-container { 
-            flex-shrink: 0; /* Чтобы аватар не сплющило */
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
         }
         
         .avatar {
-            width: 140px; 
-            height: 140px;
+            width: 140px; height: 140px;
             object-fit: cover;
-            border-radius: 12px; /* Чуть скруглим, но оставим квадратным (техно-стиль) */
+            border-radius: 12px;
             border: 2px solid #00FFA3;
             box-shadow: 0 0 20px rgba(0, 255, 163, 0.3);
-            filter: sepia(20%) hue-rotate(90deg) saturate(1.5) contrast(1.1); /* Эффект матрицы */
         }
         
-        /* Лейбл под аватаром (опционально) */
-        .avatar-label {
-            font-size: 0.6rem;
-            color: var(--text-sec);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            opacity: 0.7;
-        }
-        
-        /* Правая часть (Текст) */
         .info-container { 
             flex-grow: 1; 
             text-align: left;
-            padding-top: 5px; /* Компенсация высоты шрифта заголовка */
         }
         
         h1 {
-            font-family: var(--font-head);
-            font-size: 1.8rem; /* Чуть меньше, чтобы не ломалось */
-            line-height: 1.4;
-            margin: 0 0 25px 0;
-            
-            background: var(--accent-grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 5px rgba(0,255,163,0.4));
+            font-family: 'Press Start 2P', cursive; /* Пиксельный шрифт заголовка */
+            font-size: 1.5rem;
+            line-height: 1.5;
+            margin: 0 0 20px 0;
+            color: #00FFA3;
+            text-shadow: 0 0 10px rgba(0, 255, 163, 0.6);
         }
         
-        /* Блок системного лога (черный квадрат) */
+        /* Блок терминала */
         .terminal-box {
-            background: rgba(0, 0, 0, 0.6);
-            border-left: 3px solid #00FFA3; /* Зеленая полоска слева */
-            padding: 15px 20px;
+            background: #000;
+            border-left: 4px solid #00FFA3;
+            padding: 20px;
             border-radius: 4px;
-            font-family: var(--font-body);
-            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace; /* Моноширинный для текста */
+            font-size: 0.9rem;
             color: #b0fce0;
             line-height: 1.6;
-            box-shadow: inset 0 0 20px rgba(0,0,0,1);
+            min-height: 120px; /* Фиксируем высоту, чтобы блок не прыгал */
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0, 50, 20, 0.5);
         }
         
-        .cmd { color: #00FFA3; font-weight: 800; margin-right: 8px; }
-        .text-body { display: block; margin-bottom: 15px; color: #ddd; }
-        .highlight-red { color: #ff5555; font-weight: bold; }
-        
-        /* Статус снизу */
-        .status-line {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 10px;
-            padding-top: 10px;
-            font-size: 0.7rem;
-            color: rgba(0, 255, 163, 0.6);
-            display: flex;
-            justify-content: space-between;
+        /* Эффект мигающего курсора */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: #00FFA3;
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+            margin-left: 5px;
         }
         
-        /* Адаптив для мобилок */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Красный текст для выделения (если понадобится) */
+        .highlight-alert {
+            color: #ff5555;
+            text-shadow: 0 0 5px #ff0000;
+        }
+        
         @media (max-width: 768px) {
-            header.profile-card {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                padding: 25px;
-            }
-            
-            .info-container { text-align: center; }
-            .terminal-box { text-align: left; /* Текст внутри лога все равно слева */ }
-            h1 { font-size: 1.4rem; }
+            header.profile-card { flex-direction: column; align-items: center; text-align: center; }
+            .terminal-box { text-align: left; min-height: auto; }
         }
 
 /* --- ПЛАВАЮЩЕЕ МЕНЮ (DOCK) --- */
@@ -310,37 +289,20 @@
 <body>
 
 <header class="profile-card">
-    <!-- Аватарка -->
     <div class="avatar-container">
-        <!-- Замени ссылку на свою аватарку -->
-        <img src="https://i.pinimg.com/originals/9a/12/35/9a123545b721831c2509176378484ba8.jpg" alt="User" class="avatar">
-        <div class="avatar-label">ID: 80085</div>
+        <!-- Твоя аватарка -->
+        <img src="https://i.pinimg.com/736x/2e/23/d1/2e23d1b463695d51d18252d689240369.jpg" alt="Avatar" class="avatar">
     </div>
     
-    <!-- Текст -->
     <div class="info-container">
-        <h1>АВТОРИТЕТНЫЙ СПИСОК ЖЕЛАНИЙ ☣</h1>
+        <h1>АВТОРИТЕТНЫЙ СПИСОК ЖЕЛАНИЙ 💾</h1>
         
         <div class="terminal-box">
-            <div>
-                <span class="cmd">> SYSTEM_LOG:</span>
-                Твое присутствие здесь не оплачено. 
-                У меня аллергия на пустые руки. 
-                Начинается отек Квинке и приступ мизантропии.
-            </div>
+            <span class="cmd" style="color: #00FFA3; font-weight:bold;">> SYSTEM_LOG: </span>
+            <span id="typewriter-text"></span><span class="cursor"></span>
             
-            <br>
-            
-            <div class="text-body">
-                <span class="cmd">> ACTION_REQUIRED:</span>
-                Требуется экстренное вмешательство. 
-                Вылечи меня. Купи мне жизнь. Или хотя бы подписку на радость.
-                <span class="highlight-red">Не будь причиной моей смерти, будь спонсором моего воскрешения.</span>
-            </div>
-
-            <div class="status-line">
-                <span>CPU: 99% STRESS</span>
-                <span style="animation: blink 1s infinite">[STATUS: CRITICAL FAILURE]</span>
+            <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 10px; font-size: 0.7rem; color: #555;">
+                [STATUS: WAITING_FOR_LOOT...]
             </div>
         </div>
     </div>
@@ -369,6 +331,40 @@
         const container = document.getElementById('main-container');
         const tabsContainer = document.getElementById('tabs-container');
         let allItems = [];
+
+                // --- ТЕКСТ ДЛЯ ПЕЧАТНОЙ МАШИНКИ ---
+        const textLines = [
+            "Обнаружен дефицит серотонина.", 
+            "Фраза «Главное не подарок» признана устаревшей.",
+            "Пожалуйста, не спорьте с наукой",
+            "и помогите закрыть дыру в душе."
+        ];
+        
+        const speed = 40; // Скорость печати (меньше = быстрее)
+        const textElement = document.getElementById("typewriter-text");
+        let lineIndex = 0;
+        let charIndex = 0;
+        
+        function typeWriter() {
+            if (lineIndex < textLines.length) {
+                if (charIndex < textLines[lineIndex].length) {
+                    textElement.innerHTML += textLines[lineIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeWriter, speed);
+                } else {
+                    // Конец строки, добавляем перенос и идем дальше
+                    textElement.innerHTML += "<br>"; 
+                    lineIndex++;
+                    charIndex = 0;
+                    setTimeout(typeWriter, 300); // Пауза между строками
+                }
+            }
+        }
+        
+        // Запускаем печать после загрузки страницы
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(typeWriter, 1000); // Задержка 1 сек перед стартом
+        });
 
         // 1. Загрузка
         function loadWishlist() {
@@ -551,6 +547,7 @@
     </script>
 </body>
 </html>
+
 
 
 
