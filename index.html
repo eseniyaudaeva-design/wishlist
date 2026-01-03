@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ЭТО МНЕ???</title>
     <!-- Шрифты -->
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
     
 <style>
         /* --- ЭСТЕТИКА: TOXIC GLASS (GREEN EDITION) --- */
@@ -23,7 +23,7 @@
             --card-grad: linear-gradient(180deg, rgba(20, 30, 25, 0.8) 0%, rgba(5, 10, 5, 0.9) 100%);
             --bg-deep: #020502; /* Очень темный зеленый, почти черный */
             
-            --font-head: 'Unbounded', sans-serif;
+            --font-head: 'Pixelify Sans', sans-serif; /* Поменяли здесь */
             --font-body: 'JetBrains Mono', monospace;
         }
 
@@ -84,9 +84,12 @@
         }
         
         h1 {
-            font-family: 'Press Start 2P', cursive; /* Пиксельный шрифт заголовка */
-            font-size: 1.5rem;
-            line-height: 1.5;
+            font-family: var(--font-head);
+            font-size: 2rem; /* Можно сделать чуть больше */
+            font-weight: 700;
+            text-transform: uppercase; /* Все буквы заглавные */
+            letter-spacing: 2px; /* Небольшой отступ между буквами для стиля */
+            line-height: 1.2;
             margin: 0 0 20px 0;
             color: #00FFA3;
             text-shadow: 0 0 10px rgba(0, 255, 163, 0.6);
@@ -567,6 +570,7 @@
     </script>
 </body>
 </html>
+
 
 
 
