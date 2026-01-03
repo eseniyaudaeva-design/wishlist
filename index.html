@@ -336,6 +336,56 @@
             50% { transform: skew(10deg); color: #fff; }
             100% { transform: skew(-10deg); }
         }
+
+            /* ИГРОВОЕ ПОЛЕ */
+        #game-stage {
+            display: none;
+            width: 100%;
+            height: 120px;
+            background: rgba(0, 20, 10, 0.5);
+            border-bottom: 2px solid #00FFA3;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        /* ПИКСЕЛЬНЫЙ ЧЕЛОВЕЧЕК (CSS-ART) */
+        #player {
+            width: 32px; height: 40px;
+            position: absolute; bottom: 0; left: 30px;
+            transition: bottom 0.1s;
+            z-index: 10;
+        }
+        /* Рисуем человечка тенями (8-bit style) */
+        .pixel-man {
+            width: 4px; height: 4px;
+            background: #00FFA3;
+            box-shadow: 
+                4px 0 #00FFA3, 8px 0 #00FFA3, 12px 0 #00FFA3,
+                0 4px #00FFA3, 16px 4px #00FFA3,
+                0 8px #00FFA3, 4px 8px #00FFA3, 8px 8px #00FFA3, 12px 8px #00FFA3, 16px 8px #00FFA3,
+                4px 12px #00FFA3, 12px 12px #00FFA3,
+                4px 16px #00FFA3, 8px 16px #00FFA3, 12px 16px #00FFA3,
+                4px 20px #00FFA3, 12px 20px #00FFA3,
+                4px 24px #00FFA3, 12px 24px #00FFA3;
+        }
+        
+        /* ПОДАРОК */
+        .game-gift {
+            position: absolute;
+            font-size: 20px;
+            bottom: 40px; /* Высота, на которой надо прыгать */
+            right: -30px;
+            filter: drop-shadow(0 0 5px #00FFA3);
+        }
+        
+        #game-score {
+            position: absolute; top: 5px; right: 10px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px; color: #00FFA3;
+        }
+        
+        #terminal-input-line { display: none; }
     </style>
 </head>
 <body>
@@ -349,18 +399,24 @@
     <div class="info-container">
         <h1>АВТОРИТЕТНЫЙ СПИСОК ЖЕЛАНИЙ ☣</h1>
         
-<div class="terminal-box" onclick="document.getElementById('terminal-input').focus()">
+<div class="terminal-box" id="terminal-box">
     <div id="terminal-history">
-        <span class="cmd" style="color: #00FFA3; font-weight:bold;">> </span>
+        <span class="cmd" style="color: #00FFA3; font-weight:bold;">></span>
         <span id="typewriter-text"></span>
     </div>
-    <div class="input-line" style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+
+    <div id="game-stage">
+        <div id="game-score">GIFTS: 0 / 5</div>
+        <div id="player"><div class="pixel-man"></div></div>
+    </div>
+
+    <div class="input-line" id="terminal-input-line" style="display:none; align-items: center; gap: 10px; margin-top: 10px;">
         <span style="color: #00FFA3; font-weight: bold;">USER@HACKER:~$</span>
-        <input type="text" id="terminal-input" autocomplete="off" autofocus 
+        <input type="text" id="terminal-input" autocomplete="off" 
                style="background: transparent; border: none; color: #b0fce0; outline: none; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; flex-grow: 1;">
     </div>
     
-    <div class="status-blink">ну ты это...подари че-нибудь]</div>
+    <div id="status-label" class="status-blink">ну ты жто...подари че-нибудь]</div>
 </div>
         </div>
     </div>
@@ -389,6 +445,112 @@
         const container = document.getElementById('main-container');
         const tabsContainer = document.getElementById('tabs-container');
         let allItems = [];
+
+        // --- ЛОГИКА ИГРЫ И ТЕРМИНАЛА ---
+        let isGaming = false;
+        let giftsCollected = 0;
+        let isJumping = false;
+        const player = document.getElementById('player');
+        const stage = document.getElementById('game-stage');
+        const history = document.getElementById('terminal-history');
+        const statusLabel = document.getElementById('status-label');
+        const bootSequence = ["ACCESS_DENIED. ТЫ КТО ТАКОЙ?", "ДОКАЖИ СВОЙ АВТОРИТЕТ.", "СОБЕРИ 5 ПОДАРКОВ ПРЫЖКОМ.", "ЖМИ [ПРОБЕЛ] ДЛЯ ПРЫЖКА."];
+        let lineIdx = 0; let charIdx = 0;
+
+        function runBoot() {
+            if (lineIdx < bootSequence.length) {
+                if (charIdx < bootSequence[lineIdx].length) {
+                    history.innerHTML += bootSequence[lineIdx].charAt(charIdx);
+                    charIdx++; setTimeout(runBoot, 30);
+                } else {
+                    history.innerHTML += "<br>> ";
+                    lineIdx++; charIdx = 0; setTimeout(runBoot, 500);
+                }
+            } else { startGame(); }
+        }
+        
+        // Запуск при загрузке
+        document.addEventListener("DOMContentLoaded", () => { setTimeout(runBoot, 1000); });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (isGaming) jump();
+            }
+        });
+
+        function jump() {
+            if (isJumping) return;
+            isJumping = true;
+            let h = 0;
+            let up = setInterval(() => {
+                if (h >= 70) {
+                    clearInterval(up);
+                    let down = setInterval(() => {
+                        if (h <= 0) { clearInterval(down); isJumping = false; }
+                        h -= 4; player.style.bottom = h + 'px';
+                    }, 15);
+                }
+                h += 4; player.style.bottom = h + 'px';
+            }, 15);
+        }
+
+        function startGame() {
+            isGaming = true;
+            stage.style.display = 'block';
+            statusLabel.innerText = "[STATUS: LOOT_RUN_ACTIVE]";
+            spawnGift();
+        }
+
+        function spawnGift() {
+            if (!isGaming) return;
+            const gift = document.createElement('div');
+            gift.className = 'game-gift'; gift.innerText = '🎁';
+            stage.appendChild(gift);
+            let pos = 0;
+            let move = setInterval(() => {
+                if (!isGaming) { clearInterval(move); gift.remove(); return; }
+                pos += 5; gift.style.right = pos + 'px';
+                let pR = player.getBoundingClientRect();
+                let gR = gift.getBoundingClientRect();
+                if (pR.right > gR.left && pR.left < gR.right && pR.top < gR.bottom && pR.bottom > gR.top) {
+                    giftsCollected++;
+                    document.getElementById('game-score').innerText = `GIFTS: ${giftsCollected} / 5`;
+                    clearInterval(move); gift.remove();
+                    if (giftsCollected >= 5) winGame();
+                }
+                if (pos > stage.offsetWidth) { clearInterval(move); gift.remove(); }
+            }, 20);
+            setTimeout(spawnGift, 1500 + Math.random() * 1000);
+        }
+
+        function winGame() {
+            isGaming = false;
+            stage.style.display = 'none';
+            document.getElementById('terminal-input-line').style.display = 'flex';
+            statusLabel.innerText = "[STATUS: GOD_MODE_ENABLED]";
+            history.innerHTML = "<span style='color:#00FFA3'>ДОСТУП ПОЛУЧЕН. ТЕПЕРЬ ТЫ ТУТ ГЛАВНЫЙ.</span><br>> ВВЕДИ 'HELP' ДЛЯ СПИСКА КОМАНД<br>";
+            document.getElementById('terminal-input').focus();
+        }
+
+        // КОМАНДЫ
+        document.getElementById('terminal-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const cmd = this.value.toUpperCase().trim();
+                this.value = '';
+                const log = (m, c = "#b0fce0") => {
+                    const l = document.createElement('div');
+                    l.style.color = c; l.innerHTML = `> ${m}`;
+                    history.appendChild(l);
+                };
+                if (cmd === 'HELP') log("COMMANDS: CRITICAL_RED, CLEAR, REVEAL", "#00FFA3");
+                else if (cmd === 'CRITICAL_RED') { document.body.classList.toggle('critical-mode'); log("THEME_CHANGED"); }
+                else if (cmd === 'CLEAR') history.innerHTML = '';
+                else if (cmd === 'REVEAL') log("SECRET_MESSAGE: ВЫ ГЕНИЙ И КРАСАВЧИК!");
+                else log("UNKNOWN_COMMAND", "#ff5555");
+            }
+        });
+        // --- КОНЕЦ ЛОГИКИ ИГРЫ ---
 
                 // --- ТЕКСТ ДЛЯ ПЕЧАТНОЙ МАШИНКИ ---
         const textLines = [
@@ -696,6 +858,7 @@
     </script>
 </body>
 </html>
+
 
 
 
