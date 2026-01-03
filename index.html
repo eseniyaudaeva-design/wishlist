@@ -8,15 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     
 <style>
-        /* --- ЭСТЕТИКА: CYBERPUNK GLASS (PREMIUM) --- */
+        /* --- ЭСТЕТИКА: CYBERPUNK GLASS v2 (FIXED BUTTONS) --- */
         :root {
             --text-main: #ffffff;
-            --text-sec: #a0a0a0;
+            --text-sec: #b0b0b0;
             
-            /* Градиенты вместо скучных цветов */
-            --accent-grad: linear-gradient(135deg, #FF0055 0%, #FF00CC 100%); /* Розовый неон */
-            --card-grad: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
-            --bg-grad: radial-gradient(circle at 50% 0%, #2a1b3d 0%, #0a0a0a 80%);
+            /* Сочные градиенты */
+            --accent-grad: linear-gradient(90deg, #FF0080 0%, #7928CA 100%); /* Розовый -> Фиолетовый */
+            --card-grad: linear-gradient(180deg, rgba(30, 30, 30, 0.8) 0%, rgba(10, 10, 10, 0.9) 100%);
+            --bg-deep: #050505;
             
             --font-head: 'Press Start 2P', cursive;
             --font-body: 'JetBrains Mono', monospace;
@@ -24,184 +24,157 @@
 
         body {
             font-family: var(--font-body);
-            background: #050505;
-            background-image: var(--bg-grad); /* Глубокий фон */
+            background-color: var(--bg-deep);
+            /* Темно-фиолетовое свечение сверху */
+            background-image: radial-gradient(circle at 50% -20%, #4a004a 0%, #050505 60%);
             color: var(--text-main);
             margin: 0; padding: 0;
             min-height: 100vh;
-            background-attachment: fixed; /* Фон стоит на месте */
+            background-attachment: fixed;
         }
 
-        /* КОНТЕЙНЕР ПО ЦЕНТРУ */
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             padding: 0 20px 100px;
         }
 
-        /* ШАПКА */
+        /* --- ШАПКА --- */
         header {
             text-align: center;
-            padding: 80px 20px 60px;
+            padding: 80px 20px 50px;
         }
 
         .avatar {
-            width: 150px; height: 150px;
+            width: 140px; height: 140px;
             object-fit: cover;
-            border-radius: 50%; /* Круглая аватарка */
-            border: 3px solid rgba(255,255,255,0.2);
-            box-shadow: 0 0 40px rgba(255, 0, 204, 0.3); /* Неоновое свечение */
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(255, 0, 128, 0.4); /* Неоновая тень */
             margin-bottom: 25px;
-            transition: 0.3s;
         }
-        .avatar:hover { transform: scale(1.05); box-shadow: 0 0 60px rgba(255, 0, 204, 0.6); }
 
         h1 {
             font-family: var(--font-head);
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            /* Текст с градиентом */
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            /* Текст градиентом */
             background: var(--accent-grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255, 0, 85, 0.4);
+            text-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
         }
 
-        .intro { color: var(--text-sec); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; }
+        .intro { color: var(--text-sec); letter-spacing: 1px; font-size: 0.9rem; }
 
-        /* ВКЛАДКИ (TABS) */
-        .tabs-container {
-            display: flex; justify-content: center; flex-wrap: wrap; gap: 15px;
-            margin-top: 40px;
-        }
-
+        /* Вкладки */
+        .tabs-container { margin-top: 40px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .tab-btn {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
-            color: #fff;
-            border-radius: 30px; /* Пилюли */
-            padding: 12px 25px;
-            font-family: var(--font-body);
-            font-weight: bold;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-            backdrop-filter: blur(5px);
+            color: #fff; padding: 12px 24px; border-radius: 12px;
+            cursor: pointer; font-family: var(--font-body); font-weight: bold; transition: 0.3s;
         }
-        .tab-btn:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
-        .tab-btn.active { 
-            background: var(--accent-grad); 
-            border: none; 
-            box-shadow: 0 5px 20px rgba(255, 0, 85, 0.4);
-        }
+        .tab-btn:hover { background: rgba(255,255,255,0.15); }
+        .tab-btn.active { background: var(--accent-grad); border-color: transparent; box-shadow: 0 0 20px rgba(255,0,128,0.4); }
 
-        /* СЕТКА ТОВАРОВ - ВОЗДУХ! */
+        /* --- СЕТКА --- */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 40px; /* Отлепляем карточки друг от друга */
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Карточки пошире */
+            gap: 40px; /* Много воздуха */
             margin-top: 50px;
         }
 
-        /* КАРТОЧКА - СТЕКЛО */
+        /* --- КАРТОЧКА --- */
         .card {
-            background: var(--card-grad); /* Полупрозрачный градиент */
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Тонкая рамка */
-            border-radius: 20px; /* Скругления */
+            background: var(--card-grad);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
             display: flex; flex-direction: column;
             overflow: hidden;
             position: relative;
-            backdrop-filter: blur(10px); /* Эффект матового стекла */
             transition: 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .card:hover {
-            transform: translateY(-10px); /* Всплывает выше */
-            border-color: rgba(255, 0, 204, 0.5); /* Рамка светится */
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(255, 0, 204, 0.2);
+            transform: translateY(-8px);
+            border-color: rgba(255, 0, 128, 0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px rgba(255, 0, 128, 0.2);
         }
 
         .card-img-container {
-            height: 280px;
+            height: 300px; /* Высокая картинка */
             background: #000;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .card-img { 
-            width: 100%; height: 100%; object-fit: cover; 
-            transition: 0.5s; 
-            opacity: 0.9;
-        }
-        .card:hover .card-img { transform: scale(1.1); opacity: 1; }
-
-        .card-content { 
-            padding: 25px; 
-            display: flex; flex-direction: column; flex-grow: 1; 
-        }
-
-        .card-tag { 
-            color: #ff00cc; font-size: 0.7rem; font-weight: bold; 
-            text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;
+            position: relative; overflow: hidden;
         }
         
-        .card-title { 
-            font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; line-height: 1.4; color: #fff;
-        }
-        
-        .card-price { 
-            font-family: var(--font-head); font-size: 1rem; color: #ccc; 
-            margin-bottom: 25px; 
-            text-shadow: 0 0 10px rgba(255,255,255,0.2);
-        }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .card-img { transform: scale(1.05); }
+
+        .card-content { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+
+        .card-tag { color: #b967ff; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
+        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; line-height: 1.4; color: #fff; }
+        .card-price { font-family: var(--font-head); font-size: 1.1rem; color: #ddd; margin-bottom: 25px; }
         
         .spacer { flex-grow: 1; }
 
-        /* КНОПКИ */
-        .actions { display: flex; gap: 15px; }
+        /* --- КНОПКИ (ИСПРАВЛЕНО) --- */
+        .actions {
+            display: flex;
+            gap: 12px;
+            height: 55px; /* ФИКСИРОВАННАЯ ВЫСОТА ДЛЯ НОРМАЛЬНЫХ КНОПОК */
+            margin-top: auto;
+        }
 
-        /* Ссылка (иконка) */
+        /* Кнопка ссылки (квадратная слева) */
         .btn-link {
-            width: 50px; height: 50px;
+            flex: 0 0 55px; /* Квадрат 55x55 */
             display: flex; align-items: center; justify-content: center;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.2);
-            color: #fff; border-radius: 12px;
-            text-decoration: none; font-size: 1.2rem; transition: 0.3s;
+            border-radius: 12px;
+            color: #fff; text-decoration: none; font-size: 1.4rem;
+            transition: 0.3s;
         }
         .btn-link:hover { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
 
-        /* Бронь (Градиентная кнопка) */
+        /* Кнопка брони (длинная справа) */
         .btn-reserve {
-            flex-grow: 1;
-            background: var(--accent-grad); /* Градиент */
+            flex-grow: 1; /* Занимает всё оставшееся место */
+            height: 100%; /* На всю высоту контейнера */
+            background: var(--accent-grad);
             border: none;
             border-radius: 12px;
             color: #fff;
-            font-family: var(--font-head); font-size: 0.75rem;
-            padding: 0; /* Высота задается флексом */
+            font-family: var(--font-head); 
+            font-size: 0.85rem; /* Размер шрифта читаемый */
+            text-transform: uppercase;
             cursor: pointer;
             transition: 0.3s;
-            text-transform: uppercase;
-            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 0, 128, 0.3);
+            display: flex; align-items: center; justify-content: center; /* Центрируем текст */
         }
-        .btn-reserve:hover {
+        
+        .btn-reserve:hover { 
+            filter: brightness(1.2); 
+            box-shadow: 0 10px 25px rgba(255, 0, 128, 0.6);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 0, 85, 0.6);
-            filter: brightness(1.2);
         }
 
-        /* НЕАКТИВНОЕ СОСТОЯНИЕ */
+        /* --- СТАТУСЫ --- */
         .card.inactive { opacity: 0.5; filter: grayscale(100%); pointer-events: none; }
+        
         .badge {
             position: absolute; top: 15px; right: 15px; 
             padding: 8px 12px; border-radius: 8px;
-            font-family: var(--font-head); font-size: 0.6rem; color: #fff; z-index: 10;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            font-family: var(--font-head); font-size: 0.7rem; color: #fff; z-index: 10;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.5);
         }
         .badge.res { background: #ffaa00; }
-        .badge.done { background: #ff0055; }
+        .badge.done { background: #333; border: 1px solid #555; }
     </style>
 </head>
 <body>
@@ -418,6 +391,7 @@
     </script>
 </body>
 </html>
+
 
 
 
