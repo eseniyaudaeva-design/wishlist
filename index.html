@@ -8,15 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     
     <style>
-/* --- ВАРИАНТ 3: DEEP BLUE --- */
+/* --- ВАРИАНТ 2: MODERN LIGHT --- */
         :root {
-            --bg-color: #121826;    /* Темно-синий асфальт */
-            --card-bg: #1c2536;
-            --text-main: #e2e8f0;   /* Белый, но не режет глаз */
-            --accent: #38bdf8;      /* Небесно-голубой */
-            --accent-dim: #0ea5e9;
-            --danger: #ef4444;
-            --border: 1px solid #334155; /* Тонкие рамки */
+            --bg-color: #F3F4F6;   /* Очень светло-серый */
+            --card-bg: #FFFFFF;    /* Белые карточки */
+            --text-main: #111111;  /* Черный текст */
+            --accent: #00D26A;     /* Яркий зеленый (как у банка Точка или Spotify) */
+            --accent-dim: #005c2f;
+            --danger: #FF3B30;
+            --border: 2px solid #111111; /* Контрастные черные рамки */
             
             --font-head: 'Press Start 2P', cursive;
             --font-body: 'JetBrains Mono', monospace;
@@ -27,20 +27,16 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0; padding: 0;
-            background: radial-gradient(circle at top center, #1e293b, #121826);
-            min-height: 100vh;
+            /* Сетка точками (более легкая) */
+            background-image: radial-gradient(#ccc 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        /* Скругляем углы для современности */
-        .card, .tab-btn, .avatar, .btn-link, .btn-reserve {
-            border-radius: 12px; 
-        }
-        .card-img-container {
-            border-radius: 10px 10px 0 0;
-        }
-        /* Убираем жесткие тени */
-        .avatar, .tab-btn { box-shadow: none; }
-        .card { border-width: 1px; }
+        /* Инвертируем некоторые цвета для светлой темы */
+        .tab-btn { background: #fff; color: #000; border-color: #000; }
+        .tab-btn:hover { background: #000; color: #fff; }
+        .system-msg { background: #fff; color: #000; border-color: #000; }
+        h1 { text-shadow: 3px 3px 0px #ccc; }
 
         body {
             font-family: var(--font-body);
@@ -469,6 +465,7 @@
     </script>
 </body>
 </html>
+
 
 
 
