@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Вишлист ✨</title>
+    <!-- Подключаем красивый шрифт Manrope -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- НАСТРОЙКИ ДИЗАЙНА (CSS) --- */
+        :root {
+            --bg-color: #F3F4F6;       /* Цвет фона страницы */
+            --card-bg: #FFFFFF;        /* Цвет карточек */
+            --text-main: #1F2937;      /* Цвет текста */
+            --text-secondary: #6B7280; /* Цвет подписей */
+            --accent: #6366f1;         /* Цвет кнопки (фиолетовый) */
+            --accent-hover: #4f46e5;   /* Цвет кнопки при наведении */
+            --radius: 20px;            /* Закругление углов */
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        /* Шапка сайта */
+        header {
+            text-align: center;
+            padding: 80px 20px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 { margin: 0; font-size: 3rem; font-weight: 800; letter-spacing: -1px; }
+        p.intro { color: var(--text-secondary); margin-top: 15px; font-size: 1.1rem; }
+
+        /* Сетка товаров */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        /* Карточка */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .card-img-container {
+            height: 280px;
+            overflow: hidden;
+            background: #e5e7eb;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .card:hover .card-img { transform: scale(1.05); }
+
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 10px;
+        }
+
+        .card-price {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .spacer { flex-grow: 1; } /* Толкает кнопку вниз */
+
+        .btn {
+            display: block;
+            text-align: center;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background: var(--accent-hover); }
+
+        /* Стили для статуса "ПОДАРЕНО" */
+        .card.done { opacity: 0.6; }
+        .card.done .btn {
+            background: #e5e7eb;
+            color: #9ca3af;
+            cursor: default;
+            pointer-events: none;
+        }
+        
+        /* Бейдж "Подарено" */
+        .badge-done {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Wishlist 🎁</h1>
+        <p class="intro">Привет! Это список моих хотелок. Я буду рад(а) любому подарку из этого списка. Нажмите кнопку, чтобы забронировать или купить.</p>
+    </header>
+
+    <div class="container">
+        <div class="grid" id="wishlist-grid">
+            <!-- Сюда JavaScript сам вставит карточки -->
+        </div>
+    </div>
+
+    <!-- --- ВОТ ЗДЕСЬ ТЫ МЕНЯЕШЬ ДАННЫЕ --- -->
+    <script>
+        // СПИСОК ТВОИХ ПОДАРКОВ
+        // isBought: false — свободно, true — подарено
+        const items = [
+            {
+                name: "Наушники Sony WH-1000XM4",
+                price: "25 000 ₽",
+                image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800",
+                link: "https://market.yandex.ru/", 
+                isBought: false 
+            },
+            {
+                name: "Кофемашина капсульная",
+                price: "8 000 ₽",
+                image: "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=800",
+                link: "https://ozon.ru/",
+                isBought: false
+            },
+            {
+                name: "Сертификат в Золотое Яблоко",
+                price: "Любая сумма",
+                image: "https://images.unsplash.com/photo-1627384113743-6bd5a479fffd?w=800",
+                link: "#",
+                isBought: false
+            },
+            {
+                name: "Уютный плед",
+                price: "2 500 ₽",
+                image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?w=800",
+                link: "#",
+                isBought: true // ЭТО УЖЕ ПОДАРИЛИ
+            }
+            // Чтобы добавить новое, скопируй блок { ... }, и вставь сюда
+        ];
+
+        // --- ДАЛЬШЕ НЕ ТРОГАЙ, ЭТО МАГИЯ JS ---
+        const grid = document.getElementById('wishlist-grid');
+
+        items.forEach(item => {
+            const card = document.createElement('div');
+            card.className = `card ${item.isBought ? 'done' : ''}`;
+            
+            const btnText = item.isBought ? 'Уже подарено' : 'Подарить / Купить';
+            const badge = item.isBought ? '<div class="badge-done">Подарено</div>' : '';
+
+            card.innerHTML = `
+                ${badge}
+                <div class="card-img-container">
+                    <img src="${item.image}" alt="${item.name}" class="card-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">${item.name}</h3>
+                    <div class="card-price">${item.price}</div>
+                    <div class="spacer"></div>
+                    <a href="${item.link}" target="_blank" class="btn">${btnText}</a>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+</html>
