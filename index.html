@@ -8,17 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     
 <style>
-        /* --- ЭСТЕТИКА: BLOOD & PIXELS (VAMPIRE MODE) --- */
+        /* --- ЭСТЕТИКА: INDUSTRIAL PIXEL (CONCRETE & BLOOD) --- */
         :root {
-            /* Палитра из твоего изображения */
-            --bg-color: #050505;       /* Черный (справа) */
-            --card-bg: #0a0a0a;        /* Чуть светлее черного */
-            --text-main: #EAEAEA;      /* Светло-серый (слева) */
-            --text-sec: #9CA3AF;       /* Серый */
+            /* БЕРЕМ ЦВЕТА ИЗ ТВОЕЙ ПАЛИТРЫ */
+            --bg-color: #e6e6e6;       /* Светло-серый (бетон) */
+            --card-bg: #ffffff;        /* Чистый белый для карточек */
+            --text-main: #0a0a0a;      /* Почти черный для текста */
+            --text-sec: #555555;       /* Серый */
             
-            --accent: #7f0000;         /* Кроваво-красный (центр палитры) */
-            --accent-bright: #ff1a1a;  /* Ярко-красный для наведения */
-            --border-color: #330000;   /* Темно-бордовый для рамок */
+            --accent: #7f0000;         /* Темно-красный (кровь) */
+            --accent-hover: #ff0000;   /* Ярко-красный для наведения */
+            --border: 2px solid #0a0a0a; /* Жирные черные рамки */
             
             --font-head: 'Press Start 2P', cursive;
             --font-body: 'JetBrains Mono', monospace;
@@ -31,158 +31,172 @@
             margin: 0; padding: 0;
             min-height: 100vh;
             
-            /* ВМЕСТО СЕТКИ: Эффект старого монитора (Scanlines) + виньетка */
-            background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 4px, 6px 100%;
-            box-shadow: inset 0 0 150px rgba(0,0,0,0.9); /* Затемнение по краям */
+            /* Текстура шума (зернистость), чтобы не было скучно */
+            background-image: 
+                radial-gradient(#999 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
         header {
             text-align: center;
-            padding: 80px 20px 40px;
+            padding: 60px 20px 40px;
             max-width: 900px;
             margin: 0 auto;
         }
 
-        /* Аватарка с красным свечением */
+        /* Аватарка */
         .avatar {
             width: 140px; height: 140px;
             object-fit: cover;
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 20px var(--border-color);
+            border: var(--border);
+            box-shadow: 6px 6px 0px var(--accent); /* Красная тень */
             margin-bottom: 25px;
             image-rendering: pixelated;
+            background: #fff;
         }
 
         h1 {
             font-family: var(--font-head);
             color: var(--text-main);
             text-transform: uppercase;
-            letter-spacing: -2px;
-            text-shadow: 4px 4px 0px var(--accent); /* Жесткая красная тень */
+            letter-spacing: -1px;
             margin-bottom: 10px;
+            text-shadow: 3px 3px 0px #bbb; /* Объем */
         }
         
-        .intro { color: var(--text-sec); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;}
+        .intro { 
+            background: var(--text-main); 
+            color: #fff; 
+            display: inline-block; 
+            padding: 5px 10px; 
+            font-weight: bold;
+        }
 
-        /* ТАБЫ (Кнопки категорий) */
+        /* ТАБЫ */
         .tabs-container {
-            display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;
-            margin: 40px 0 60px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 15px;
+            margin: 40px 0 50px;
         }
 
         .tab-btn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-sec);
-            font-family: var(--font-body); /* Тут лучше моноширинный, строже */
-            font-weight: bold;
-            padding: 10px 20px;
+            background: var(--bg-color);
+            border: var(--border);
+            color: var(--text-main);
+            font-family: var(--font-head);
+            font-size: 0.7rem;
+            padding: 15px 20px;
             cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.2s;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+            transition: 0.1s;
         }
-        .tab-btn:hover { border-color: var(--accent-bright); color: var(--accent-bright); }
+        
+        .tab-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px var(--accent); }
         .tab-btn.active { 
             background: var(--accent); 
             color: #fff; 
-            border-color: var(--accent); 
-            box-shadow: 0 0 15px var(--accent);
+            border-color: var(--text-main);
+            box-shadow: 4px 4px 0px var(--text-main);
         }
 
-        /* СЕТКА ТОВАРОВ */
+        /* СЕТКА */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 40px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; }
 
         /* КАРТОЧКА */
         .card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: var(--border);
             display: flex; flex-direction: column;
             transition: 0.2s;
             position: relative;
+            /* Жесткая тень, как в комиксах */
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.1);
         }
 
-        /* Эффект наведения: Красная рамка + сдвиг */
         .card:hover {
-            border-color: var(--accent-bright);
-            box-shadow: 5px 5px 0px var(--accent);
-            transform: translate(-2px, -2px);
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0px var(--accent); /* При наведении тень красная */
             z-index: 10;
+            border-color: var(--text-main);
         }
 
         .card-img-container {
-            height: 250px; overflow: hidden;
-            border-bottom: 1px solid var(--border-color);
-            background: #000;
-            filter: grayscale(100%); /* Фото ч/б по умолчанию */
-            transition: 0.3s;
+            height: 260px; overflow: hidden;
+            border-bottom: var(--border);
+            position: relative;
+            background: #eee;
         }
-        /* При наведении фото становится цветным */
-        .card:hover .card-img-container { filter: grayscale(0%); }
 
-        .card-img { width: 100%; height: 100%; object-fit: cover; }
+        .card-img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            transition: 0.3s;
+            filter: grayscale(100%); /* ЧБ по умолчанию */
+        }
+        /* При наведении цвет возвращается */
+        .card:hover .card-img { filter: grayscale(0%); transform: scale(1.05); }
 
         .card-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
         
         .card-tag { 
-            font-size: 0.65rem; color: var(--accent); 
-            letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; 
+            background: #000; color: #fff; display: inline-block; width: fit-content;
+            padding: 4px 8px; font-size: 0.6rem; margin-bottom: 10px; font-weight: bold;
         }
+        
         .card-title { 
-            font-family: var(--font-body); font-size: 1rem; font-weight: 700; 
-            margin-bottom: 15px; color: #fff; line-height: 1.4;
+            font-size: 1.1rem; font-weight: 800; margin-bottom: 10px; line-height: 1.4; color: #000;
         }
+        
         .card-price { 
-            font-family: var(--font-head); font-size: 0.8rem; 
-            color: var(--text-sec); margin-bottom: 25px; 
+            font-family: var(--font-head); font-size: 0.9rem; 
+            color: var(--accent); margin-bottom: 20px; 
+            border-bottom: 2px dashed #ccc; padding-bottom: 15px;
         }
         
         .spacer { flex-grow: 1; }
 
         /* КНОПКИ ДЕЙСТВИЙ */
-        .actions { display: flex; gap: 0; /* Склеенные кнопки */ }
+        .actions { display: flex; gap: 10px; }
 
         .btn-link {
-            flex: 0 0 50px;
+            width: 45px; height: 45px;
             display: flex; align-items: center; justify-content: center;
-            background: #111; border: 1px solid var(--border-color); border-right: none;
-            color: #fff; text-decoration: none; font-size: 1rem; transition: 0.2s;
+            background: #fff; border: 2px solid #000;
+            color: #000; text-decoration: none; font-size: 1.2rem; transition: 0.2s;
+            box-shadow: 3px 3px 0 #ccc;
         }
-        .btn-link:hover { background: var(--accent); }
+        .btn-link:hover { background: #000; color: #fff; box-shadow: 3px 3px 0 var(--accent); border-color: #000; }
 
         .btn-reserve {
             flex-grow: 1;
-            background: transparent;
-            border: 1px solid var(--text-main);
-            color: var(--text-main);
-            padding: 12px 0;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            cursor: pointer;
-            font-family: var(--font-head);
+            background: var(--text-main); /* Черная кнопка */
+            border: 2px solid var(--text-main);
+            color: #fff;
+            font-weight: bold; text-transform: uppercase;
+            cursor: pointer; font-family: var(--font-head); font-size: 0.7rem;
+            box-shadow: 3px 3px 0 #ccc;
             transition: 0.2s;
         }
         .btn-reserve:hover {
-            background: var(--text-main);
-            color: #000;
-            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+            background: var(--accent); /* Становится красной */
+            border-color: var(--accent);
+            box-shadow: 4px 4px 0 #000;
+            transform: translate(-1px, -1px);
         }
 
-        /* ИНАКТИВ (Занято) */
-        .card.inactive { opacity: 0.4; pointer-events: none; }
-        .card.inactive .card-img { filter: grayscale(100%) brightness(0.5); }
-        .card.inactive .btn-reserve { border-color: #333; color: #555; }
+        /* ИНАКТИВ (Серый и прозрачный) */
+        .card.inactive { opacity: 0.6; box-shadow: none; border-color: #ccc; background: #f0f0f0; transform: none !important;}
+        .card.inactive .card-title { color: #999; text-decoration: line-through; }
+        .card.inactive .card-img { filter: grayscale(100%) opacity(0.5); }
+        .card.inactive .btn-reserve { background: #ccc; border-color: #ccc; color: #888; cursor: default; box-shadow: none; }
         
         /* Бейджи */
         .badge {
-            position: absolute; top: 0; left: 0; padding: 8px 12px;
-            background: var(--accent); color: #fff;
-            font-family: var(--font-head); font-size: 0.6rem; z-index: 2;
+            position: absolute; top: 10px; right: 10px; padding: 6px 10px;
+            font-family: var(--font-head); font-size: 0.6rem; color: #fff; z-index: 2;
+            border: 2px solid #fff; box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
         }
-        .badge.done { background: #333; color: #888; text-decoration: line-through; }
+        .badge.res { background: var(--text-main); } 
+        .badge.done { background: var(--accent); }
     </style>
 </head>
 <body>
@@ -398,6 +412,7 @@
     </script>
 </body>
 </html>
+
 
 
 
