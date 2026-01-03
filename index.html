@@ -134,6 +134,26 @@
             .terminal-box { text-align: left; min-height: auto; }
         }
 
+            /* Анимация медленного мигания */
+        @keyframes pulse-slow {
+            0% { opacity: 1; text-shadow: 0 0 5px rgba(0, 255, 163, 0.5); }
+            50% { opacity: 0.3; text-shadow: none; }
+            100% { opacity: 1; text-shadow: 0 0 5px rgba(0, 255, 163, 0.5); }
+        }
+        
+        .status-blink {
+            margin-top: 15px; 
+            border-top: 1px solid #333; 
+            padding-top: 10px; 
+            font-size: 0.7rem; 
+            
+            /* Цвет чуть зеленоватый, чтобы сочетался */
+            color: rgba(0, 255, 163, 0.8); 
+            
+            /* Сама анимация: 2.5 секунды, бесконечно */
+            animation: pulse-slow 2.5s infinite ease-in-out;
+        }
+
 /* --- ПЛАВАЮЩЕЕ МЕНЮ (DOCK) --- */
         .tabs-container {
             /* Магия закрепления */
@@ -301,7 +321,7 @@
             <span class="cmd" style="color: #00FFA3; font-weight:bold;">> SYSTEM_LOG: </span>
             <span id="typewriter-text"></span><span class="cursor"></span>
             
-            <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 10px; font-size: 0.7rem; color: #555;">
+            <div class="status-blink">
                 [STATUS: WAITING_FOR_LOOT...]
             </div>
         </div>
@@ -547,6 +567,7 @@
     </script>
 </body>
 </html>
+
 
 
 
