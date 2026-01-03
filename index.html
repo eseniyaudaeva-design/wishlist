@@ -309,32 +309,26 @@
             const groups = {};
             items.forEach(item => {
                 if (!item.name) return;
-                // Убираем лишние пробелы в названии категории
                 let cat = item.category ? item.category.trim().toUpperCase() : 'РАЗНОЕ';
                 if (!groups[cat]) groups[cat] = [];
                 groups[cat].push(item);
             });
 
             // 2. Рисуем КНОПКУ "ВСЕ"
-            createTabButton('ВСЕ', true); // true значит активная по умолчанию
+            createTabButton('ВСЕ', true); 
 
-            // 3. Рисуем КНОПКИ остальных категорий
+            // 3. Рисуем КНОПКИ категорий
             Object.keys(groups).forEach(catName => {
                 createTabButton(catName, false);
             });
 
-            // 4. Рисуем САМИ СЕКЦИИ ТОВАРОВ
+            // 4. Рисуем СЕТКИ товаров (БЕЗ ЗАГОЛОВКОВ)
             Object.keys(groups).forEach(categoryName => {
-                // Обертка для всей секции (чтобы скрывать её целиком)
                 const sectionDiv = document.createElement('div');
                 sectionDiv.className = 'category-wrapper';
-                sectionDiv.dataset.category = categoryName; // Метка, чтобы находить её
+                sectionDiv.dataset.category = categoryName;
 
-                // Заголовок
-                const title = document.createElement('h2');
-                title.className = 'category-title';
-                title.innerHTML = `> SECTION: ${categoryName}`;
-                sectionDiv.appendChild(title);
+                // --- Я УДАЛИЛ ОТСЮДА СОЗДАНИЕ ЗАГОЛОВКА H2 ---
 
                 // Сетка
                 const grid = document.createElement('div');
@@ -413,4 +407,5 @@
     </script>
 </body>
 </html>
+
 
