@@ -8,15 +8,20 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     
 <style>
-        /* --- ЭСТЕТИКА: CYBERPUNK GLASS v2 (FIXED BUTTONS) --- */
+        /* --- ЭСТЕТИКА: TOXIC GLASS (GREEN EDITION) --- */
         :root {
             --text-main: #ffffff;
             --text-sec: #b0b0b0;
             
-            /* Сочные градиенты */
-            --accent-grad: linear-gradient(90deg, #FF0080 0%, #7928CA 100%); /* Розовый -> Фиолетовый */
-            --card-grad: linear-gradient(180deg, rgba(30, 30, 30, 0.8) 0%, rgba(10, 10, 10, 0.9) 100%);
-            --bg-deep: #050505;
+            /* --- НОВАЯ ЗЕЛЕНАЯ ПАЛИТРА --- */
+            /* Градиент: от Мятного (#00FFA3) к Электрик-голубому (#00B8FF) */
+            --accent-grad: linear-gradient(90deg, #00FFA3 0%, #00B8FF 100%); 
+            
+            /* Цвет теней (RGB формат для полупрозрачности) */
+            --accent-rgb: 0, 255, 163; 
+            
+            --card-grad: linear-gradient(180deg, rgba(20, 30, 25, 0.8) 0%, rgba(5, 10, 5, 0.9) 100%);
+            --bg-deep: #020502; /* Очень темный зеленый, почти черный */
             
             --font-head: 'Press Start 2P', cursive;
             --font-body: 'JetBrains Mono', monospace;
@@ -25,8 +30,8 @@
         body {
             font-family: var(--font-body);
             background-color: var(--bg-deep);
-            /* Темно-фиолетовое свечение сверху */
-            background-image: radial-gradient(circle at 50% -20%, #4a004a 0%, #050505 60%);
+            /* Изумрудное свечение сверху */
+            background-image: radial-gradient(circle at 50% -20%, #004a30 0%, #000000 60%);
             color: var(--text-main);
             margin: 0; padding: 0;
             min-height: 100vh;
@@ -50,7 +55,8 @@
             object-fit: cover;
             border-radius: 50%;
             border: 3px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 30px rgba(255, 0, 128, 0.4); /* Неоновая тень */
+            /* Зеленое свечение */
+            box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.4); 
             margin-bottom: 25px;
         }
 
@@ -58,11 +64,11 @@
             font-family: var(--font-head);
             font-size: 2.2rem;
             margin-bottom: 10px;
-            /* Текст градиентом */
             background: var(--accent-grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
+            /* Тень текста */
+            text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5);
         }
 
         .intro { color: var(--text-sec); letter-spacing: 1px; font-size: 0.9rem; }
@@ -76,13 +82,18 @@
             cursor: pointer; font-family: var(--font-body); font-weight: bold; transition: 0.3s;
         }
         .tab-btn:hover { background: rgba(255,255,255,0.15); }
-        .tab-btn.active { background: var(--accent-grad); border-color: transparent; box-shadow: 0 0 20px rgba(255,0,128,0.4); }
+        .tab-btn.active { 
+            background: var(--accent-grad); 
+            border-color: transparent; 
+            box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.4); 
+            color: #000; /* Черный текст на ярком зеленом лучше читается */
+        }
 
         /* --- СЕТКА --- */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Карточки пошире */
-            gap: 40px; /* Много воздуха */
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 40px;
             margin-top: 50px;
         }
 
@@ -100,12 +111,12 @@
 
         .card:hover {
             transform: translateY(-8px);
-            border-color: rgba(255, 0, 128, 0.5);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px rgba(255, 0, 128, 0.2);
+            border-color: rgba(var(--accent-rgb), 0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px rgba(var(--accent-rgb), 0.2);
         }
 
         .card-img-container {
-            height: 300px; /* Высокая картинка */
+            height: 300px;
             background: #000;
             position: relative; overflow: hidden;
         }
@@ -115,23 +126,26 @@
 
         .card-content { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
 
-        .card-tag { color: #b967ff; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
+        .card-tag { 
+            color: #00FFA3; /* Ярко-зеленый тег */
+            font-size: 0.75rem; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; 
+        }
         .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; line-height: 1.4; color: #fff; }
         .card-price { font-family: var(--font-head); font-size: 1.1rem; color: #ddd; margin-bottom: 25px; }
         
         .spacer { flex-grow: 1; }
 
-        /* --- КНОПКИ (ИСПРАВЛЕНО) --- */
+        /* --- КНОПКИ --- */
         .actions {
             display: flex;
             gap: 12px;
-            height: 55px; /* ФИКСИРОВАННАЯ ВЫСОТА ДЛЯ НОРМАЛЬНЫХ КНОПОК */
+            height: 55px;
             margin-top: auto;
         }
 
-        /* Кнопка ссылки (квадратная слева) */
+        /* Ссылка */
         .btn-link {
-            flex: 0 0 55px; /* Квадрат 55x55 */
+            flex: 0 0 55px;
             display: flex; align-items: center; justify-content: center;
             background: rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.2);
@@ -141,27 +155,29 @@
         }
         .btn-link:hover { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
 
-        /* Кнопка брони (длинная справа) */
+        /* Бронь */
         .btn-reserve {
-            flex-grow: 1; /* Занимает всё оставшееся место */
-            height: 100%; /* На всю высоту контейнера */
+            flex-grow: 1;
+            height: 100%;
             background: var(--accent-grad);
             border: none;
             border-radius: 12px;
-            color: #fff;
+            color: #000; /* Текст черный, так стильнее на зеленом */
+            font-weight: 800;
             font-family: var(--font-head); 
-            font-size: 0.85rem; /* Размер шрифта читаемый */
+            font-size: 0.85rem;
             text-transform: uppercase;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 0, 128, 0.3);
-            display: flex; align-items: center; justify-content: center; /* Центрируем текст */
+            box-shadow: 0 5px 15px rgba(var(--accent-rgb), 0.3);
+            display: flex; align-items: center; justify-content: center;
         }
         
         .btn-reserve:hover { 
             filter: brightness(1.2); 
-            box-shadow: 0 10px 25px rgba(255, 0, 128, 0.6);
+            box-shadow: 0 10px 25px rgba(var(--accent-rgb), 0.6);
             transform: translateY(-2px);
+            color: #fff;
         }
 
         /* --- СТАТУСЫ --- */
@@ -391,6 +407,7 @@
     </script>
 </body>
 </html>
+
 
 
 
