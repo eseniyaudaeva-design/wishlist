@@ -8,19 +8,39 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     
     <style>
-        /* --- ЭСТЕТИКА: PIXEL UI --- */
+/* --- ВАРИАНТ 3: DEEP BLUE --- */
         :root {
-            --bg-color: #1a1a1a;
-            --card-bg: #222222;
-            --text-main: #ffffff;
-            --accent: #D4FC79;         /* Салатовый */
-            --accent-dim: #4a5c25;     /* Темно-салатовый (для границ) */
-            --danger: #FF6B6B;         /* Красный */
-            --border: 2px solid #444;
+            --bg-color: #121826;    /* Темно-синий асфальт */
+            --card-bg: #1c2536;
+            --text-main: #e2e8f0;   /* Белый, но не режет глаз */
+            --accent: #38bdf8;      /* Небесно-голубой */
+            --accent-dim: #0ea5e9;
+            --danger: #ef4444;
+            --border: 1px solid #334155; /* Тонкие рамки */
             
             --font-head: 'Press Start 2P', cursive;
             --font-body: 'JetBrains Mono', monospace;
         }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0; padding: 0;
+            background: radial-gradient(circle at top center, #1e293b, #121826);
+            min-height: 100vh;
+        }
+
+        /* Скругляем углы для современности */
+        .card, .tab-btn, .avatar, .btn-link, .btn-reserve {
+            border-radius: 12px; 
+        }
+        .card-img-container {
+            border-radius: 10px 10px 0 0;
+        }
+        /* Убираем жесткие тени */
+        .avatar, .tab-btn { box-shadow: none; }
+        .card { border-width: 1px; }
 
         body {
             font-family: var(--font-body);
@@ -449,6 +469,7 @@
     </script>
 </body>
 </html>
+
 
 
 
