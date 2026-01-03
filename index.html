@@ -305,13 +305,17 @@
 
         const container = document.getElementById('main-container');
         const tabsContainer = document.getElementById('tabs-container');
+        let allItems = []; // Тут будем хранить все загруженные товары
 
+        // 1. Загрузка
         function loadWishlist() {
             Papa.parse(GOOGLE_SHEET_URL, {
                 download: true,
                 header: true,
                 complete: function(results) {
-                    renderSystem(results.data);
+                    // Сохраняем товары в глобальную переменную
+                    allItems = results.data.filter(item => item.name); // Убираем пустые
+                    initSystem();
                 },
                 error: function(err) {
                     console.error(err);
@@ -320,85 +324,71 @@
             });
         }
 
-        function renderSystem(items) {
-            container.innerHTML = ''; 
+        // 2. Инициализация (создаем кнопки)
+        function initSystem() {
             tabsContainer.innerHTML = '';
-
-            // 1. Группируем данные
-            const groups = {};
-            items.forEach(item => {
-                if (!item.name) return;
+            
+            // Собираем список уникальных категорий
+            const categories = new Set();
+            allItems.forEach(item => {
                 let cat = item.category ? item.category.trim().toUpperCase() : 'РАЗНОЕ';
-                if (!groups[cat]) groups[cat] = [];
-                groups[cat].push(item);
+                categories.add(cat);
             });
 
-            // 2. Рисуем КНОПКУ "ВСЕ"
-            createTabButton('ВСЕ', true); 
+            // Кнопка ВСЕ
+            createTabButton('ВСЕ', true);
 
-            // 3. Рисуем КНОПКИ категорий
-            Object.keys(groups).forEach(catName => {
-                createTabButton(catName, false);
+            // Кнопки категорий
+            categories.forEach(cat => {
+                createTabButton(cat, false);
             });
 
-            // 4. Рисуем СЕТКИ товаров (БЕЗ ЗАГОЛОВКОВ)
-            Object.keys(groups).forEach(categoryName => {
-                const sectionDiv = document.createElement('div');
-                sectionDiv.className = 'category-wrapper';
-                sectionDiv.dataset.category = categoryName;
-
-                // --- Я УДАЛИЛ ОТСЮДА СОЗДАНИЕ ЗАГОЛОВКА H2 ---
-
-                // Сетка
-                const grid = document.createElement('div');
-                grid.className = 'grid';
-                groups[categoryName].forEach(item => {
-                    grid.appendChild(createCardHTML(item));
-                });
-                sectionDiv.appendChild(grid);
-
-                container.appendChild(sectionDiv);
-            });
+            // Сразу рисуем ВСЕ товары
+            renderGrid('ВСЕ');
         }
 
-        // Функция создания кнопки вкладки
+        // 3. Главная функция отрисовки сетки
+        function renderGrid(filterCategory) {
+            container.innerHTML = ''; // Очищаем экран
+
+            // Создаем ОДНУ общую сетку для всего
+            const grid = document.createElement('div');
+            grid.className = 'grid';
+
+            // Фильтруем товары
+            const filteredItems = allItems.filter(item => {
+                let itemCat = item.category ? item.category.trim().toUpperCase() : 'РАЗНОЕ';
+                if (filterCategory === 'ВСЕ') return true; // Показываем всё
+                return itemCat === filterCategory; // Или только совпадения
+            });
+
+            // Наполняем сетку
+            filteredItems.forEach(item => {
+                grid.appendChild(createCardHTML(item));
+            });
+
+            container.appendChild(grid);
+        }
+
+        // 4. Логика кнопок
         function createTabButton(text, isActive) {
             const btn = document.createElement('button');
             btn.className = `tab-btn ${isActive ? 'active' : ''}`;
             btn.innerText = text;
             
             btn.onclick = () => {
-                // 1. Убираем подсветку со всех кнопок
+                // Переключаем активный класс
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                // 2. Подсвечиваем нажатую
                 btn.classList.add('active');
-                // 3. Фильтруем контент
-                filterContent(text);
+                
+                // Перерисовываем сетку
+                renderGrid(text);
             };
 
             tabsContainer.appendChild(btn);
         }
 
-        // Логика фильтрации
-        function filterContent(categoryToShow) {
-            const allSections = document.querySelectorAll('.category-wrapper');
-            
-            allSections.forEach(section => {
-                if (categoryToShow === 'ВСЕ') {
-                    // Если выбрали ВСЕ, показываем всё
-                    section.classList.remove('hidden-section');
-                } else {
-                    // Иначе сравниваем категорию
-                    if (section.dataset.category === categoryToShow) {
-                        section.classList.remove('hidden-section'); // Показать
-                    } else {
-                        section.classList.add('hidden-section'); // Скрыть
-                    }
-                }
-            });
-        }
-
-        // Функция создания карточки (без изменений)
+        // 5. Создание карточки (Стандартное)
         function createCardHTML(item) {
             const isDone = item.isBought && item.isBought.toLowerCase().includes('true');
             const card = document.createElement('div');
@@ -426,6 +416,7 @@
     </script>
 </body>
 </html>
+
 
 
 
