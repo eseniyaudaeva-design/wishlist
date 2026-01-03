@@ -3,225 +3,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Вишлист ✨</title>
-    <!-- Подключаем красивый шрифт Manrope -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Мой Вишлист 💀</title>
+    <!-- Шрифты -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     
     <style>
-        /* --- НАСТРОЙКИ ДИЗАЙНА (CSS) --- */
+        /* --- ЭСТЕТИКА: CYBER / ALT / ANIME --- */
         :root {
-            --bg-color: #121212;       /* Почти черный фон */
-            --card-bg: #1E1E1E;        /* Темно-серые карточки */
-            --text-main: #FFFFFF;      /* Белый текст */
-            --text-secondary: #A0A0A0; /* Серые подписи */
-            --accent: #BB86FC;         /* Нежно-фиолетовая кнопка */
-            --accent-hover: #9965f4;   /* Кнопка при наведении */
-            --radius: 16px;            /* Чуть более строгие углы */
-        }}
+            --bg-color: #050505;
+            --card-bg: #000000;
+            --text-main: #e0e0e0;
+            --accent: #ff00ff;
+            --accent-sec: #00ff41;
+            --font-code: 'JetBrains Mono', monospace;
+        }
 
         body {
-            font-family: 'Manrope', sans-serif;
+            font-family: var(--font-code);
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            line-height: 1.5;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            min-height: 100vh; 
-            color: var(--text-main);
-            margin: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        /* Шапка сайта */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 999;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
         header {
             text-align: center;
             padding: 80px 20px 40px;
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
+            border-bottom: 1px dashed #333;
         }
 
         .avatar {
             width: 120px;
             height: 120px;
-            border-radius: 50%; /* Делает круг */
+            border-radius: 0;
             object-fit: cover;
             margin-bottom: 20px;
-            border: 3px solid var(--accent); /* Цветная обводка */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 2px solid var(--text-main);
+            filter: contrast(120%) grayscale(100%);
+            image-rendering: pixelated; /* Чтобы пиксели были четкими */
         }
-        
-        h1 { margin: 0; font-size: 3rem; font-weight: 800; letter-spacing: -1px; }
-        p.intro { color: var(--text-secondary); margin-top: 15px; font-size: 1.1rem; }
+        .avatar:hover { filter: grayscale(0%); }
 
-        /* Сетка товаров */
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2rem;
+            color: var(--text-main);
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px var(--accent);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        p.intro {
+            color: var(--accent-sec);
+            font-size: 0.9rem;
+            max-width: 500px;
+            margin: 0 auto;
+            border: 1px solid var(--accent-sec);
+            padding: 10px;
+            background: rgba(0, 255, 65, 0.05);
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px 80px;
+            padding: 40px 20px 100px;
+        }
+
+        /* Заголовки категорий */
+        .category-title {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-top: 60px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-right: 20px;
+            text-shadow: 2px 2px 0px #000;
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            gap: 20px;
         }
 
-        /* Карточка */
         .card {
             background: var(--card-bg);
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #444;
+            border-radius: 0;
+            position: relative;
+            transition: 0.2s;
             display: flex;
             flex-direction: column;
-            position: relative;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-color: var(--accent);
+            box-shadow: 5px 5px 0px var(--accent);
+            transform: translate(-3px, -3px);
         }
 
         .card-img-container {
-            height: 280px;
+            height: 250px;
             overflow: hidden;
-            background: #e5e7eb;
+            border-bottom: 1px solid #444;
+            position: relative;
+        }
+        
+        .card-img-container::after {
+            content: "NO SIGNAL";
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.8rem;
+            color: #333;
+            z-index: 0;
         }
 
         .card-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            filter: grayscale(80%) sepia(20%);
+            transition: 0.1s;
+            position: relative;
+            z-index: 1;
         }
         
-        .card:hover .card-img { transform: scale(1.05); }
+        .card:hover .card-img { filter: grayscale(0%); }
 
         .card-content {
-            padding: 25px;
-            flex-grow: 1;
+            padding: 20px;
             display: flex;
             flex-direction: column;
+            flex-grow: 1;
         }
 
         .card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin: 0 0 10px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 5px;
         }
 
+        .card-title::before { content: "> "; color: var(--accent); }
+
         .card-price {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            font-weight: 500;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--accent-sec);
             margin-bottom: 20px;
         }
 
-        .spacer { flex-grow: 1; } /* Толкает кнопку вниз */
+        .spacer { flex-grow: 1; }
 
         .btn {
             display: block;
-            text-align: center;
-            background: var(--accent);
-            color: white;
+            background: transparent;
+            color: var(--text-main);
             text-decoration: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: background 0.2s;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--text-main);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: 0.2s;
         }
 
-        .btn:hover { background: var(--accent-hover); }
-
-        /* Стили для статуса "ПОДАРЕНО" */
-        .card.done { opacity: 0.6; }
-        .card.done .btn {
-            background: #e5e7eb;
-            color: #9ca3af;
-            cursor: default;
-            pointer-events: none;
+        .btn:hover {
+            background: var(--accent);
+            color: black;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
         }
         
-        /* Бейдж "Подарено" */
+        .card.done { opacity: 0.4; border-style: dashed; }
+        .card.done .card-img { filter: blur(4px) grayscale(100%); }
+        .card.done .btn { text-decoration: line-through; border-color: #333; color: #333; }
+        
         .badge-done {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            backdrop-filter: blur(5px);
+            top: 10px; right: 10px;
+            background: red;
+            color: black;
+            font-family: 'Press Start 2P';
+            font-size: 0.6rem;
+            padding: 5px;
+            z-index: 10;
+            border: 1px solid black;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="https://i.pinimg.com/564x/...твоя_фотка.jpg" alt="Я" class="avatar">
+        <!-- Не забудь вставить ссылку на свою пиксельную аватарку сюда -->
+        <img src="https://via.placeholder.com/150/000000/FFFFFF/?text=404" alt="Я" class="avatar">
         <h1>Wishlist 🎁</h1>
-        <p class="intro">Привет! Это список моих хотелок. Я буду рад(а) любому подарку из этого списка. Нажмите кнопку, чтобы забронировать или купить.</p>
+        <p class="intro">SYSTEM_STATUS: ONLINE. Awaiting gifts...</p>
     </header>
 
-    <div class="container">
-        <div class="grid" id="wishlist-grid">
-            <!-- Сюда JavaScript сам вставит карточки -->
-        </div>
+    <div class="container" id="main-container">
+        <!-- Сюда скрипт всё загрузит -->
+        <div style="text-align:center; color: #555;">[LOADING DATA...]</div>
     </div>
 
-    <!-- --- ВОТ ЗДЕСЬ ТЫ МЕНЯЕШЬ ДАННЫЕ --- -->
+    <!-- Библиотека для чтения Google Таблиц -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
     <script>
-        // СПИСОК ТВОИХ ПОДАРКОВ
-        // isBought: false — свободно, true — подарено
-        const items = [
-            {
-                name: "Наушники Sony WH-1000XM4",
-                price: "25 000 ₽",
-                image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800",
-                link: "https://market.yandex.ru/", 
-                isBought: false 
-            },
-            {
-                name: "Кофемашина капсульная",
-                price: "8 000 ₽",
-                image: "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=800",
-                link: "https://ozon.ru/",
-                isBought: false
-            },
-            {
-                name: "Сертификат в Золотое Яблоко",
-                price: "Любая сумма",
-                image: "https://images.unsplash.com/photo-1627384113743-6bd5a479fffd?w=800",
-                link: "#",
-                isBought: false
-            },
-            {
-                name: "Уютный плед",
-                price: "2 500 ₽",
-                image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?w=800",
-                link: "#",
-                isBought: true // ЭТО УЖЕ ПОДАРИЛИ
-            }
-            // Чтобы добавить новое, скопируй блок { ... }, и вставь сюда
-        ];
+        // ============================================
+        // 👇 ВСТАВЬ СЮДА СВОЮ ССЫЛКУ ИЗ GOOGLE SHEETS (CSV) 👇
+        const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvLAOYfzwxm-Js6_6R2Qz0Mu4sSoPyegl5uF20XgtVqGSHKfL8QxYBvY762SaH5FLCe5BVXAX1l6pc/pub?output=csv";
+        // ============================================
 
-        // --- ДАЛЬШЕ НЕ ТРОГАЙ, ЭТО МАГИЯ JS ---
-        const grid = document.getElementById('wishlist-grid');
+        const container = document.getElementById('main-container');
 
-        items.forEach(item => {
-            const card = document.createElement('div');
-            card.className = `card ${item.isBought ? 'done' : ''}`;
+        function loadWishlist() {
+            Papa.parse(GOOGLE_SHEET_URL, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    renderByCategories(results.data);
+                },
+                error: function(err) {
+                    console.error("Ошибка:", err);
+                    container.innerHTML = '<p style="color:red; text-align:center;">ERROR: LINK DISCONNECTED</p>';
+                }
+            });
+        }
+
+        function renderByCategories(items) {
+            container.innerHTML = ''; 
+
+            // 1. Группируем товары по категориям
+            const groups = {};
+            items.forEach(item => {
+                if (!item.name) return; // Пропуск пустых строк
+                
+                // Если категория не указана в таблице, кидаем в "SYSTEM_MISC"
+                let cat = item.category ? item.category.trim() : 'SYSTEM_MISC';
+                if (!groups[cat]) groups[cat] = [];
+                groups[cat].push(item);
+            });
+
+            // 2. Рисуем разделы
+            Object.keys(groups).forEach(categoryName => {
+                // Заголовок раздела
+                const title = document.createElement('h2');
+                title.className = 'category-title';
+                title.innerHTML = `> SECTION: ${categoryName}`;
+                container.appendChild(title);
+
+                // Сетка товаров
+                const grid = document.createElement('div');
+                grid.className = 'grid';
+                
+                groups[categoryName].forEach(item => {
+                    grid.appendChild(createCardHTML(item));
+                });
+
+                container.appendChild(grid);
+            });
             
-            const btnText = item.isBought ? 'Уже подарено' : 'Подарить / Купить';
-            const badge = item.isBought ? '<div class="badge-done">Подарено</div>' : '';
+            // Если таблица пустая или ошибка
+            if (Object.keys(groups).length === 0) {
+                 container.innerHTML = '<p style="text-align:center;">[DATABASE EMPTY]</p>';
+            }
+        }
+
+        function createCardHTML(item) {
+            // Проверяем, куплено или нет (ищем слово TRUE или true)
+            const isDone = item.isBought && item.isBought.toLowerCase().includes('true');
+            
+            const card = document.createElement('div');
+            card.className = `card ${isDone ? 'done' : ''}`;
+            
+            const btnText = isDone ? 'SOLD OUT' : 'GET IT';
+            const badge = isDone ? '<div class="badge-done">SOLD</div>' : '';
+
+            // Картинка или заглушка
+            const imgUrl = item.image ? item.image : 'https://media.tenor.com/images/a742875b478326087d0c754d7281f621/tenor.gif';
 
             card.innerHTML = `
                 ${badge}
                 <div class="card-img-container">
-                    <img src="${item.image}" alt="${item.name}" class="card-img">
+                    <img src="${imgUrl}" alt="${item.name}" class="card-img">
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">${item.name}</h3>
@@ -230,10 +317,11 @@
                     <a href="${item.link}" target="_blank" class="btn">${btnText}</a>
                 </div>
             `;
-            grid.appendChild(card);
-        });
+            return card;
+        }
+
+        // Запуск
+        loadWishlist();
     </script>
 </body>
 </html>
-
-
