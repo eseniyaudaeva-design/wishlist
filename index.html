@@ -11,8 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Press+Start+2P&family=Stalinist+One&display=swap" rel="stylesheet">
     
 <style>
-        /* --- ЭСТЕТИКА: TOXIC GLASS (GREEN EDITION) --- */
-        :root {
+    :root {
         --text-main: #ffffff;
         --text-sec: #b0b0b0;
         --accent-grad: linear-gradient(90deg, #00FFA3 0%, #00B8FF 100%); 
@@ -20,886 +19,300 @@
         --card-grad: linear-gradient(180deg, rgba(20, 30, 25, 0.8) 0%, rgba(5, 10, 5, 0.9) 100%);
         --bg-deep: #020502;
         
-        /* ТВОИ ШРИФТЫ */
-        --font-logo: 'Stalinist One', cursive;   /* Для главного заголовка наверху */
-        --font-head: 'Press Start 2P', cursive;  /* Для названий товаров, цен и кнопок */
-        --font-body: 'JetBrains Mono', monospace; /* Для текста в терминале */
+        --font-logo: 'Stalinist One', cursive;
+        --font-head: 'Press Start 2P', cursive;
+        --font-body: 'JetBrains Mono', monospace;
     }
 
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg-deep);
-            /* Изумрудное свечение сверху */
-            background-image: radial-gradient(circle at 50% -20%, #004a30 0%, #000000 60%);
-            color: var(--text-main);
-            margin: 0; padding: 0;
-            min-height: 100vh;
-            background-attachment: fixed;
-        }
+    body {
+        font-family: var(--font-body);
+        background-color: var(--bg-deep);
+        background-image: radial-gradient(circle at 50% -20%, #004a30 0%, #000000 60%);
+        color: var(--text-main);
+        margin: 0; padding: 0;
+        min-height: 100vh;
+        background-attachment: fixed;
+        overflow-x: hidden; /* Чтобы ничего не вылазило за края */
+    }
 
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 20px 100px;
-        }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px 100px;
+    }
 
-        /* --- НОВЫЙ СТИЛЬ ШАПКИ (RPG TYPING) --- */
+    /* --- ШАПКА --- */
+    header.profile-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        max-width: 900px;
+        margin: 40px auto 30px;
+        padding: 30px;
+        background: rgba(5, 15, 10, 0.8);
+        border: 1px solid rgba(0, 255, 163, 0.2);
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+    }
+    
+    .avatar {
+        width: 120px; height: 120px;
+        object-fit: cover;
+        border-radius: 15px;
+        border: 2px solid #00FFA3;
+        box-shadow: 0 0 15px rgba(0, 255, 163, 0.3);
+    }
+    
+    h1 {
+        font-family: var(--font-logo);
+        font-size: 2rem;
+        line-height: 1.1;
+        margin: 0 0 15px 0;
+        color: #00FFA3;
+        text-shadow: 0 0 10px rgba(0, 255, 163, 0.5);
+        text-transform: uppercase;
+    }
+    
+    .terminal-box {
+        background: #000;
+        border-left: 3px solid #00FFA3;
+        padding: 15px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        color: #b0fce0;
+        min-height: 80px;
+        box-shadow: inset 0 0 15px rgba(0, 50, 20, 0.4);
+    }
+
+    .cursor {
+        display: inline-block;
+        width: 8px; height: 15px;
+        background: #00FFA3;
+        animation: blink 1s step-end infinite;
+    }
+    
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* --- МОБИЛЬНАЯ АДАПТАЦИЯ (ФИКС) --- */
+    @media (max-width: 768px) {
         header.profile-card {
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 40px;
-            
-            max-width: 900px;
-            margin: 60px auto 50px;
-            padding: 35px;
-            
-            background: rgba(5, 15, 10, 0.9);
-            border: 1px solid rgba(0, 255, 163, 0.3);
-            border-radius: 16px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 50px rgba(0, 255, 163, 0.05);
-            backdrop-filter: blur(12px);
-        }
-        
-        .avatar-container { 
-            flex-shrink: 0;
-            display: flex;
             flex-direction: column;
-            align-items: center;
-        }
-        
-        .avatar {
-            width: 140px; height: 140px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 2px solid #00FFA3;
-            box-shadow: 0 0 20px rgba(0, 255, 163, 0.3);
-        }
-        
-        .info-container { 
-            flex-grow: 1; 
-            text-align: left;
-        }
-        
-        h1 {
-            font-family: var(--font-logo);
-            font-size: 2.2rem; /* Увеличил размер для веса */
-            line-height: 1.2;
-            margin: 0 0 20px 0;
-            color: #00FFA3;
-            text-shadow: 0 0 15px rgba(0, 255, 163, 0.5), 4px 4px 0px #000;
-            text-transform: uppercase;
-            letter-spacing: -1px; /* Сближаем буквы для плотности */
-        }
-        
-        /* Блок терминала */
-        .terminal-box {
-            background: #000;
-            border-left: 4px solid #00FFA3;
+            text-align: center;
+            margin: 20px 10px;
             padding: 20px;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace; /* Моноширинный для текста */
-            font-size: 0.9rem;
-            color: #b0fce0;
-            line-height: 1.6;
-            min-height: 120px; /* Фиксируем высоту, чтобы блок не прыгал */
-            position: relative;
-            box-shadow: inset 0 0 20px rgba(0, 50, 20, 0.5);
+            gap: 20px;
         }
-        
-        /* Эффект мигающего курсора */
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 18px;
-            background-color: #00FFA3;
-            vertical-align: middle;
-            animation: blink 1s step-end infinite;
-            margin-left: 5px;
+        h1 {
+            font-size: 1.2rem; /* Уменьшаем заголовок на телефоне */
+            letter-spacing: 0;
         }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        
-        /* Красный текст для выделения (если понадобится) */
-        .highlight-alert {
-            color: #ff5555;
-            text-shadow: 0 0 5px #ff0000;
-        }
-        
-        @media (max-width: 768px) {
-            header.profile-card { flex-direction: column; align-items: center; text-align: center; }
-            .terminal-box { text-align: left; min-height: auto; }
-        }
+        .avatar { width: 100px; height: 100px; }
+        .terminal-box { font-size: 0.75rem; text-align: left; }
+    }
 
-            /* Анимация медленного мигания */
-        @keyframes pulse-slow {
-            0% { opacity: 1; text-shadow: 0 0 5px rgba(0, 255, 163, 0.5); }
-            50% { opacity: 0.3; text-shadow: none; }
-            100% { opacity: 1; text-shadow: 0 0 5px rgba(0, 255, 163, 0.5); }
-        }
-        
-        .status-blink {
-            margin-top: 15px; 
-            border-top: 1px solid #333; 
-            padding-top: 10px; 
-            font-size: 0.7rem; 
-            
-            /* Цвет чуть зеленоватый, чтобы сочетался */
-            color: rgba(0, 255, 163, 0.8); 
-            
-            /* Сама анимация: 2.5 секунды, бесконечно */
-            animation: pulse-slow 2.5s infinite ease-in-out;
-        }
+    /* --- ТАБЫ (МЕНЮ) --- */
+    .tabs-container {
+        position: sticky; top: 15px; z-index: 100;
+        background: rgba(0, 5, 0, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 255, 163, 0.3);
+        border-radius: 50px;
+        padding: 8px;
+        max-width: fit-content;
+        margin: 0 auto 40px;
+        display: flex; gap: 5px; flex-wrap: wrap; justify-content: center;
+    }
 
-/* --- ПЛАВАЮЩЕЕ МЕНЮ (DOCK) --- */
-        .tabs-container {
-            /* Магия закрепления */
-            position: sticky;
-            top: 20px; /* Отступ сверху, где панель застрянет */
-            z-index: 100; /* Чтобы было ПОВЕРХ карточек */
-            
-            /* Визуал плавающей панели */
-            background: rgba(0, 5, 0, 0.7); /* Темная полупрозрачная подложка */
-            backdrop-filter: blur(15px);     /* Размытие всего, что сзади */
-            border: 1px solid rgba(0, 255, 163, 0.3); /* Тонкая зеленая рамка */
-            border-radius: 50px;             /* Форма пилюли */
-            padding: 10px 15px;
-            
-            /* Центрирование самой панели */
-            max-width: fit-content;
-            margin: 0 auto 50px; /* Отступ снизу до товаров */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            
-            display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
-            transition: 0.3s;
-        }
+    .tab-btn {
+        background: transparent; border: none;
+        color: #888; padding: 8px 16px; 
+        border-radius: 25px; cursor: pointer;
+        font-family: var(--font-body); font-weight: bold; font-size: 0.75rem;
+        transition: 0.3s;
+    }
 
-        .tab-btn {
-            background: transparent;
-            border: 1px solid transparent;
-            color: #b0b0b0; 
-            padding: 10px 20px; 
-            border-radius: 30px;
-            cursor: pointer; 
-            font-family: var(--font-body); 
-            font-weight: bold; 
-            font-size: 0.8rem;
-            transition: 0.3s;
-        }
+    .tab-btn.active { background: var(--accent-grad); color: #000; box-shadow: 0 0 15px rgba(0, 255, 163, 0.4); }
 
-        .tab-btn:hover { 
-            color: #fff; 
-            background: rgba(255,255,255,0.1); 
-        }
+    /* --- СЕТКА ТОВАРОВ --- */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+    }
 
-        .tab-btn.active { 
-            background: var(--accent-grad); 
-            color: #000; /* Черный текст на зеленом */
-            box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5); 
-            border-radius: 30px;
-        }
+    .card {
+        background: var(--card-grad);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.3s;
+        display: flex; flex-direction: column;
+    }
+    .card:hover { transform: translateY(-5px); border-color: rgba(0, 255, 163, 0.4); }
 
-        /* --- СЕТКА --- */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
+    .card-img { width: 100%; height: 250px; object-fit: cover; }
+    .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+    .card-tag { color: #00FFA3; font-size: 0.7rem; font-weight: bold; margin-bottom: 8px; }
+    .card-title { font-size: 1.1rem; margin-bottom: 10px; color: #fff; }
+    .card-price { font-family: var(--font-head); font-size: 0.9rem; color: #aaa; margin-bottom: 20px; }
 
-        /* --- КАРТОЧКА --- */
-        .card {
-            background: var(--card-grad);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            display: flex; flex-direction: column;
-            overflow: hidden;
-            position: relative;
-            transition: 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+    .actions { display: flex; gap: 10px; height: 45px; }
+    .btn-link { 
+        flex: 0 0 45px; display: flex; align-items: center; justify-content: center;
+        background: rgba(255,255,255,0.05); border-radius: 10px; text-decoration: none; color: #fff;
+    }
+    .btn-reserve {
+        flex-grow: 1; background: var(--accent-grad); border: none; border-radius: 10px;
+        font-family: var(--font-head); font-size: 0.7rem; font-weight: bold; cursor: pointer;
+    }
 
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(var(--accent-rgb), 0.5);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px rgba(var(--accent-rgb), 0.2);
-        }
-
-        .card-img-container {
-            height: 300px;
-            background: #000;
-            position: relative; overflow: hidden;
-        }
-        
-        .card-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .card:hover .card-img { transform: scale(1.05); }
-
-        .card-content { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
-
-        .card-tag { 
-            color: #00FFA3; /* Ярко-зеленый тег */
-            font-size: 0.75rem; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; 
-        }
-        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; line-height: 1.4; color: #fff; }
-        .card-price { font-family: var(--font-head); font-size: 1.1rem; color: #ddd; margin-bottom: 25px; }
-        
-        .spacer { flex-grow: 1; }
-
-        /* --- КНОПКИ --- */
-        .actions {
-            display: flex;
-            gap: 12px;
-            height: 55px;
-            margin-top: auto;
-        }
-
-        /* Ссылка */
-        .btn-link {
-            flex: 0 0 55px;
-            display: flex; align-items: center; justify-content: center;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 12px;
-            color: #fff; text-decoration: none; font-size: 1.4rem;
-            transition: 0.3s;
-        }
-        .btn-link:hover { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
-
-        /* Бронь */
-        .btn-reserve {
-            flex-grow: 1;
-            height: 100%;
-            background: var(--accent-grad);
-            border: none;
-            border-radius: 12px;
-            color: #000; /* Текст черный, так стильнее на зеленом */
-            font-weight: 800;
-            font-family: var(--font-head); 
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(var(--accent-rgb), 0.3);
-            display: flex; align-items: center; justify-content: center;
-        }
-        
-        .btn-reserve:hover { 
-            filter: brightness(1.2); 
-            box-shadow: 0 10px 25px rgba(var(--accent-rgb), 0.6);
-            transform: translateY(-2px);
-            color: #fff;
-        }
-
-        /* --- СТАТУСЫ --- */
-        .card.inactive { opacity: 0.5; filter: grayscale(100%); pointer-events: none; }
-        
-        .badge {
-            position: absolute; top: 15px; right: 15px; 
-            padding: 8px 12px; border-radius: 8px;
-            font-family: var(--font-head); font-size: 0.7rem; color: #fff; z-index: 10;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.5);
-        }
-        .badge.res { background: #ffaa00; }
-        .badge.done { background: #333; border: 1px solid #555; }
-
-            /* Кровавая тема */
-        body.critical-mode {
-            --accent-grad: linear-gradient(90deg, #ff0000 0%, #550000 100%);
-            --accent-rgb: 255, 0, 0;
-            background-image: radial-gradient(circle at 50% -20%, #4a0000 0%, #000000 60%);
-        }
-        body.critical-mode h1, body.critical-mode .card-tag { color: #ff0000; text-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
-        body.critical-mode .terminal-box { border-left-color: #ff0000; box-shadow: inset 0 0 20px rgba(50, 0, 0, 0.5); }
-        
-        /* Канвас для матрицы */
-        #matrix-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 99;
-            opacity: 0.3;
-            display: none;
-        }
-        
-        /* Глитч для цен */
-        .rich-price {
-            animation: glitch 0.3s infinite;
-            color: #ffaa00 !important;
-        }
-        @keyframes glitch {
-            0% { transform: skew(0deg); }
-            50% { transform: skew(10deg); color: #fff; }
-            100% { transform: skew(-10deg); }
-        }
-
-            /* ИГРОВОЕ ПОЛЕ */
-        #game-stage {
-            display: none;
-            width: 100%;
-            height: 120px;
-            background: rgba(0, 20, 10, 0.5);
-            border-bottom: 2px solid #00FFA3;
-            position: relative;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-        
-        /* ПИКСЕЛЬНЫЙ ЧЕЛОВЕЧЕК (CSS-ART) */
-        #player {
-            width: 32px; height: 40px;
-            position: absolute; bottom: 0; left: 30px;
-            transition: bottom 0.1s;
-            z-index: 10;
-        }
-        /* Рисуем человечка тенями (8-bit style) */
-        .pixel-man {
-            width: 4px; height: 4px;
-            background: #00FFA3;
-            box-shadow: 
-                4px 0 #00FFA3, 8px 0 #00FFA3, 12px 0 #00FFA3,
-                0 4px #00FFA3, 16px 4px #00FFA3,
-                0 8px #00FFA3, 4px 8px #00FFA3, 8px 8px #00FFA3, 12px 8px #00FFA3, 16px 8px #00FFA3,
-                4px 12px #00FFA3, 12px 12px #00FFA3,
-                4px 16px #00FFA3, 8px 16px #00FFA3, 12px 16px #00FFA3,
-                4px 20px #00FFA3, 12px 20px #00FFA3,
-                4px 24px #00FFA3, 12px 24px #00FFA3;
-        }
-        
-        /* ПОДАРОК */
-        .game-gift {
-            position: absolute;
-            font-size: 20px;
-            bottom: 40px; /* Высота, на которой надо прыгать */
-            right: -30px;
-            filter: drop-shadow(0 0 5px #00FFA3);
-        }
-        
-        #game-score {
-            position: absolute; top: 5px; right: 10px;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 10px; color: #00FFA3;
-        }
-        
-        #terminal-input-line { display: none; }
-    </style>
+    .badge {
+        position: absolute; top: 10px; right: 10px; padding: 5px 10px;
+        font-family: var(--font-head); font-size: 0.6rem; color: #fff; border-radius: 5px;
+    }
+    .badge.res { background: #ffaa00; }
+    .badge.done { background: #333; }
+    .card.inactive { opacity: 0.5; filter: grayscale(1); pointer-events: none; }
+</style>
 </head>
 <body>
 
-<header class="profile-card">
-    <div class="avatar-container">
-        <!-- Твоя аватарка -->
+<div class="container">
+    <header class="profile-card">
         <img src="avatar.jpg" alt="Avatar" class="avatar">
-    </div>
-    
-    <div class="info-container">
-        <h1>АВТОРИТЕТНЫЙ СПИСОК ЖЕЛАНИЙ ☣</h1>
-        
-<div class="terminal-box" id="terminal-box">
-    <div id="terminal-history">
-        <span class="cmd" style="color: #00FFA3; font-weight:bold;">></span>
-        <span id="typewriter-text"></span>
-    </div>
-
-    <div id="game-stage">
-        <div id="game-score">GIFTS: 0 / 5</div>
-        <div id="player"><div class="pixel-man"></div></div>
-    </div>
-
-    <div class="input-line" id="terminal-input-line" style="display:none; align-items: center; gap: 10px; margin-top: 10px;">
-        <span style="color: #00FFA3; font-weight: bold;">USER@HACKER:~$</span>
-        <input type="text" id="terminal-input" autocomplete="off" 
-               style="background: transparent; border: none; color: #b0fce0; outline: none; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; flex-grow: 1;">
-    </div>
-    
-    <div id="status-label" class="status-blink">ну ты это...подари че-нибудь]</div>
-</div>
+        <div class="info-container">
+            <h1>АВТОРИТЕТНЫЙ СПИСОК ЖЕЛАНИЙ</h1>
+            <div class="terminal-box">
+                <span id="typewriter-text"></span><span class="cursor"></span>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
     <div id="tabs-container" class="tabs-container"></div>
-    <div class="container" id="main-container">
-        <div class="grid-wrapper" id="main-container">
-        <!-- Сюда скрипт всё загрузит -->
-        <div style="text-align:center; color: #555;">[LOADING DATA...]</div>
-    </div>
+    <div id="main-container"></div>
+</div>
 
-    <!-- Библиотека для чтения Google Таблиц -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/plugin/customParseFormat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/plugin/customParseFormat.min.js"></script>
 
-    <script>
-        // --- ТВОИ НАСТРОЙКИ ---
-        const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvLAOYfzwxm-Js6_6R2Qz0Mu4sSoPyegl5uF20XgtVqGSHKfL8QxYBvY762SaH5FLCe5BVXAX1l6pc/pub?output=csv";
-        const BOT_TOKEN = "8594440034:AAGUio2Ujey_v0FiFds1dDqrqNEYwRmL1zw";
-        const CHAT_ID = "792924865";
-        // ----------------------
+<script>
+    const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvLAOYfzwxm-Js6_6R2Qz0Mu4sSoPyegl5uF20XgtVqGSHKfL8QxYBvY762SaH5FLCe5BVXAX1l6pc/pub?output=csv";
+    const BOT_TOKEN = "8594440034:AAGUio2Ujey_v0FiFds1dDqrqNEYwRmL1zw";
+    const CHAT_ID = "792924865";
 
-        dayjs.extend(window.dayjs_plugin_customParseFormat);
-        const container = document.getElementById('main-container');
-        const tabsContainer = document.getElementById('tabs-container');
-        let allItems = [];
+    dayjs.extend(window.dayjs_plugin_customParseFormat);
+    let allItems = [];
 
-        // --- ЛОГИКА ИГРЫ И ТЕРМИНАЛА ---
-        let isGaming = false;
-        let giftsCollected = 0;
-        let isJumping = false;
-        const player = document.getElementById('player');
-        const stage = document.getElementById('game-stage');
-        const history = document.getElementById('terminal-history');
-        const statusLabel = document.getElementById('status-label');
-        const bootSequence = ["ACCESS_DENIED. ТЫ КТО ТАКОЙ?", "ДОКАЖИ СВОЙ АВТОРИТЕТ.", "СОБЕРИ 5 ПОДАРКОВ ПРЫЖКОМ.", "ЖМИ [ПРОБЕЛ] ДЛЯ ПРЫЖКА."];
-        let lineIdx = 0; let charIdx = 0;
+    // --- ПЕЧАТНАЯ МАШИНКА ---
+    const textLines = [
+        "> Рабинович, вы празднуете Новый год?", 
+        "> Мы – евреи, поэтому – нет.",
+        "> Так что подарков не дарим.",
+        "> Но мы толерантные евреи, поэтому подарки принимаем."
+    ];
+    let lineIdx = 0, charIdx = 0;
+    const textEl = document.getElementById("typewriter-text");
 
-        function runBoot() {
-            if (lineIdx < bootSequence.length) {
-                if (charIdx < bootSequence[lineIdx].length) {
-                    history.innerHTML += bootSequence[lineIdx].charAt(charIdx);
-                    charIdx++; setTimeout(runBoot, 30);
-                } else {
-                    history.innerHTML += "<br>> ";
-                    lineIdx++; charIdx = 0; setTimeout(runBoot, 500);
-                }
-            } else { startGame(); }
-        }
-        
-        // Запуск при загрузке
-        document.addEventListener("DOMContentLoaded", () => { setTimeout(runBoot, 1000); });
-
-        window.addEventListener('keydown', (e) => {
-            if (e.code === 'Space') {
-                e.preventDefault();
-                if (isGaming) jump();
-            }
-        });
-
-        function jump() {
-            if (isJumping) return;
-            isJumping = true;
-            let h = 0;
-            let up = setInterval(() => {
-                if (h >= 70) {
-                    clearInterval(up);
-                    let down = setInterval(() => {
-                        if (h <= 0) { clearInterval(down); isJumping = false; }
-                        h -= 4; player.style.bottom = h + 'px';
-                    }, 15);
-                }
-                h += 4; player.style.bottom = h + 'px';
-            }, 15);
-        }
-
-        function startGame() {
-            isGaming = true;
-            stage.style.display = 'block';
-            statusLabel.innerText = "[STATUS: LOOT_RUN_ACTIVE]";
-            spawnGift();
-        }
-
-        function spawnGift() {
-            if (!isGaming) return;
-            const gift = document.createElement('div');
-            gift.className = 'game-gift'; gift.innerText = '🎁';
-            stage.appendChild(gift);
-            let pos = 0;
-            let move = setInterval(() => {
-                if (!isGaming) { clearInterval(move); gift.remove(); return; }
-                pos += 5; gift.style.right = pos + 'px';
-                let pR = player.getBoundingClientRect();
-                let gR = gift.getBoundingClientRect();
-                if (pR.right > gR.left && pR.left < gR.right && pR.top < gR.bottom && pR.bottom > gR.top) {
-                    giftsCollected++;
-                    document.getElementById('game-score').innerText = `GIFTS: ${giftsCollected} / 5`;
-                    clearInterval(move); gift.remove();
-                    if (giftsCollected >= 5) winGame();
-                }
-                if (pos > stage.offsetWidth) { clearInterval(move); gift.remove(); }
-            }, 20);
-            setTimeout(spawnGift, 1500 + Math.random() * 1000);
-        }
-
-        function winGame() {
-            isGaming = false;
-            stage.style.display = 'none';
-            document.getElementById('terminal-input-line').style.display = 'flex';
-            statusLabel.innerText = "[STATUS: GOD_MODE_ENABLED]";
-            history.innerHTML = "<span style='color:#00FFA3'>ДОСТУП ПОЛУЧЕН. ТЕПЕРЬ ТЫ ТУТ ГЛАВНЫЙ.</span><br>> ВВЕДИ 'HELP' ДЛЯ СПИСКА КОМАНД<br>";
-            document.getElementById('terminal-input').focus();
-        }
-
-        // КОМАНДЫ
-        document.getElementById('terminal-input').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const cmd = this.value.toUpperCase().trim();
-                this.value = '';
-                const log = (m, c = "#b0fce0") => {
-                    const l = document.createElement('div');
-                    l.style.color = c; l.innerHTML = `> ${m}`;
-                    history.appendChild(l);
-                };
-                if (cmd === 'HELP') log("COMMANDS: CRITICAL_RED, CLEAR, REVEAL", "#00FFA3");
-                else if (cmd === 'CRITICAL_RED') { document.body.classList.toggle('critical-mode'); log("THEME_CHANGED"); }
-                else if (cmd === 'CLEAR') history.innerHTML = '';
-                else if (cmd === 'REVEAL') log("SECRET_MESSAGE: ВЫ ГЕНИЙ И КРАСАВЧИК!");
-                else log("UNKNOWN_COMMAND", "#ff5555");
-            }
-        });
-        // --- КОНЕЦ ЛОГИКИ ИГРЫ ---
-
-                // --- ТЕКСТ ДЛЯ ПЕЧАТНОЙ МАШИНКИ ---
-        const textLines = [
-            "Рабинович, вы празднуете Новый год?", 
-            "Мы – евреи, поэтому – нет.",
-            "Так что подарков не дарим.",
-            "Но мы толерантные евреи, поэтому подарки принимаем.",
-        ];
-        
-        const speed = 40; // Скорость печати (меньше = быстрее)
-        const textElement = document.getElementById("typewriter-text");
-        let lineIndex = 0;
-        let charIndex = 0;
-        
-        function typeWriter() {
-            if (lineIndex < textLines.length) {
-                if (charIndex < textLines[lineIndex].length) {
-                    textElement.innerHTML += textLines[lineIndex].charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeWriter, speed);
-                } else {
-                    // Конец строки, добавляем перенос и идем дальше
-                    textElement.innerHTML += "<br>"; 
-                    lineIndex++;
-                    charIndex = 0;
-                    setTimeout(typeWriter, 300); // Пауза между строками
-                }
-            }
-        }
-        
-        // Запускаем печать после загрузки страницы
-        document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(typeWriter, 1000); // Задержка 1 сек перед стартом
-        });
-
-        // 1. Загрузка
-        function loadWishlist() {
-            Papa.parse(GOOGLE_SHEET_URL, {
-                download: true,
-                header: true,
-                complete: function(results) {
-                    allItems = results.data.filter(item => item.name);
-                    initSystem();
-                },
-                error: function(err) { console.error(err); }
-            });
-        }
-
-        // 2. Инициализация вкладок
-        function initSystem() {
-            tabsContainer.innerHTML = '';
-            const categories = new Set();
-            allItems.forEach(item => {
-                let cat = item.category ? item.category.trim().toUpperCase() : 'РАЗНОЕ';
-                categories.add(cat);
-            });
-
-            createTabButton('ВСЕ', true);
-            categories.forEach(cat => createTabButton(cat, false));
-            renderGrid('ВСЕ');
-        }
-
-        // 3. Отрисовка сетки с СОРТИРОВКОЙ
-        function renderGrid(filterCategory) {
-            container.innerHTML = ''; 
-            const grid = document.createElement('div');
-            grid.className = 'grid';
-
-            // Фильтруем по категории
-            let filteredItems = allItems.filter(item => {
-                let itemCat = item.category ? item.category.trim().toUpperCase() : 'РАЗНОЕ';
-                return filterCategory === 'ВСЕ' ? true : itemCat === filterCategory;
-            });
-
-            // 🔥 СОРТИРОВКА: Сначала свободные, потом занятые
-            filteredItems.sort((a, b) => {
-                const statusA = getItemStatus(a).type;
-                const statusB = getItemStatus(b).type;
-                
-                // Если статусы одинаковые - не меняем порядок
-                if (statusA === statusB) return 0;
-                // Если A свободен, он выше (-1)
-                if (statusA === 'FREE') return -1;
-                // Если B свободен, он выше (1)
-                return 1;
-            });
-
-            // Рисуем
-            filteredItems.forEach(item => {
-                grid.appendChild(createCardHTML(item));
-            });
-            container.appendChild(grid);
-        }
-
-        // Вспомогательная функция, чтобы узнать статус
-        function getItemStatus(item) {
-            const rawStatus = item.status ? item.status.trim().toUpperCase() : '';
-            
-            if (rawStatus === 'BOUGHT' || rawStatus === 'TRUE') {
-                return { type: 'DONE', text: 'УЖЕ ПОДАРЕНО', badge: '<div class="badge done">SOLD</div>' };
-            } 
-            else if (rawStatus.includes('.')) {
-                const dateBooked = dayjs(rawStatus, "DD.MM.YYYY");
-                const diff = dayjs().diff(dateBooked, 'day');
-                if (diff < 30) {
-                    return { 
-                        type: 'RESERVED', 
-                        text: `ЗАНЯТО ДО ${dateBooked.add(30, 'day').format('DD.MM')}`, 
-                        badge: '<div class="badge res">БРОНЬ</div>' 
-                    };
-                }
-            }
-            return { type: 'FREE', text: 'ЗАБРОНИРОВАТЬ', badge: '' };
-        }
-
-        // 4. Создание карточки
-        function createCardHTML(item) {
-            const statusData = getItemStatus(item);
-            const status = statusData.type; // FREE, RESERVED или DONE
-
-            // Класс для стилей (если не FREE, то inactive)
-            const cardClass = status === 'FREE' ? '' : 'inactive';
-            
-            // Ссылка на картинку
-            const imgUrl = item.image ? item.image : 'https://media.tenor.com/images/a742875b478326087d0c754d7281f621/tenor.gif';
-            
-            // Ссылка на магазин (если есть)
-            let linkButtonHtml = '';
-            if (status === 'FREE' && item.link) {
-                linkButtonHtml = `<a href="${item.link}" target="_blank" class="btn-link" title="Открыть в магазине">🔗</a>`;
-            }
-
-            // Основная кнопка
-            let mainButtonHtml = '';
-            if (status === 'FREE') {
-                const btnId = `btn-${Math.random().toString(36).substr(2, 9)}`;
-                mainButtonHtml = `<button id="${btnId}" class="btn-reserve" onclick="bookItem('${item.name}', '${btnId}')">${statusData.text}</button>`;
+    function typeWriter() {
+        if (lineIdx < textLines.length) {
+            if (charIdx < textLines[lineIdx].length) {
+                textEl.innerHTML += textLines[lineIdx].charAt(charIdx);
+                charIdx++; setTimeout(typeWriter, 40);
             } else {
-                mainButtonHtml = `<button class="btn-reserve">${statusData.text}</button>`;
+                textEl.innerHTML += "<br>"; lineIdx++; charIdx = 0;
+                setTimeout(typeWriter, 500);
             }
+        }
+    }
 
+    function loadWishlist() {
+        Papa.parse(GOOGLE_SHEET_URL, {
+            download: true, header: true,
+            complete: (res) => {
+                allItems = res.data.filter(i => i.name);
+                initSystem();
+            }
+        });
+    }
+
+    function initSystem() {
+        const tabs = document.getElementById('tabs-container');
+        const cats = new Set(['ВСЕ']);
+        allItems.forEach(i => cats.add(i.category?.trim().toUpperCase() || 'РАЗНОЕ'));
+        
+        tabs.innerHTML = '';
+        cats.forEach(c => {
+            const btn = document.createElement('button');
+            btn.className = 'tab-btn' + (c === 'ВСЕ' ? ' active' : '');
+            btn.innerText = c;
+            btn.onclick = () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderGrid(c);
+            };
+            tabs.appendChild(btn);
+        });
+        renderGrid('ВСЕ');
+        typeWriter();
+    }
+
+    function renderGrid(cat) {
+        const container = document.getElementById('main-container');
+        container.innerHTML = '<div class="grid"></div>';
+        const grid = container.querySelector('.grid');
+
+        let filtered = allItems.filter(i => cat === 'ВСЕ' || (i.category?.trim().toUpperCase() || 'РАЗНОЕ') === cat);
+        
+        filtered.sort((a,b) => (getItemStatus(a).type === 'FREE' ? -1 : 1));
+
+        filtered.forEach(item => {
+            const status = getItemStatus(item);
             const card = document.createElement('div');
-            card.className = `card ${cardClass}`;
-            
+            card.className = `card ${status.type !== 'FREE' ? 'inactive' : ''}`;
             card.innerHTML = `
-                ${statusData.badge}
-                <div class="card-img-container">
-                    <img src="${imgUrl}" alt="${item.name}" class="card-img">
-                </div>
+                ${status.badge}
+                <img src="${item.image || 'https://via.placeholder.com/300x250/000/00FFA3?text=NO+IMAGE'}" class="card-img">
                 <div class="card-content">
                     <div class="card-tag">${item.category || 'Разное'}</div>
                     <div class="card-title">${item.name}</div>
                     <div class="card-price">${item.price}</div>
-                    <div class="spacer"></div>
-                    
                     <div class="actions">
-                        ${linkButtonHtml}
-                        ${mainButtonHtml}
+                        ${item.link && status.type === 'FREE' ? `<a href="${item.link}" target="_blank" class="btn-link">🔗</a>` : ''}
+                        <button class="btn-reserve" onclick="bookItem('${item.name}', this)" ${status.type !== 'FREE' ? 'disabled' : ''}>
+                            ${status.text}
+                        </button>
                     </div>
                 </div>
             `;
-            return card;
-        }
-
-        // 5. Кнопки вкладок
-        function createTabButton(text, isActive) {
-            const btn = document.createElement('button');
-            btn.className = `tab-btn ${isActive ? 'active' : ''}`;
-            btn.innerText = text;
-            btn.onclick = () => {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                renderGrid(text);
-            };
-            tabsContainer.appendChild(btn);
-        }
-
-        // 6. Отправка в Телеграм
-        function bookItem(itemName, btnId) {
-            const btn = document.getElementById(btnId);
-            if (!confirm(`Точно забронировать "${itemName}"? \n(Это отправит уведомление владельцу)`)) return;
-
-            btn.innerText = "ОТПРАВКА...";
-            btn.disabled = true;
-
-            const message = `🚨 <b>НОВАЯ БРОНЬ!</b>\n\nТовар: <b>${itemName}</b>\nДата: ${dayjs().format('DD.MM.YYYY')}\n\n<i>Поставь дату в таблицу!</i>`;
-
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'HTML' })
-            })
-            .then(res => {
-                if (res.ok) {
-                    alert("✅ Готово! Я получила уведомление.");
-                    btn.innerText = "УВЕДОМЛЕНИЕ ОТПРАВЛЕНО";
-                    btn.style.background = "#D4FC79";
-                    btn.style.color = "black";
-                } else {
-                    alert("Ошибка бота. Напиши мне лично.");
-                    btn.disabled = false;
-                    btn.innerText = "ЗАБРОНИРОВАТЬ";
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                alert("Ошибка сети");
-                btn.disabled = false;
-                btn.innerText = "ЗАБРОНИРОВАТЬ";
-            });
-        }
-
-        const termInput = document.getElementById('terminal-input');
-        const termHistory = document.getElementById('terminal-history');
-        
-        termInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const cmd = this.value.toUpperCase().trim();
-                processCommand(cmd);
-                this.value = '';
-            }
+            grid.appendChild(card);
         });
-        
-        function processCommand(cmd) {
-            const log = (text, color = "#b0fce0") => {
-                const line = document.createElement('div');
-                line.style.color = color;
-                line.innerHTML = `> ${text}`;
-                termHistory.appendChild(line);
-                // Ограничим историю, чтобы не раздувалась
-                if (termHistory.children.length > 10) termHistory.removeChild(termHistory.firstChild);
-            };
-        
-            switch(cmd) {
-                case 'HELP':
-                    log("AVAILABLE: CRITICAL_RED, MATRIX, RICH, REVEAL, CLEAR", "#00FFA3");
-                    break;
-                    
-                case 'CRITICAL_RED':
-                    document.body.classList.toggle('critical-mode');
-                    log("SYSTEM OVERRIDE: COLOR_THEME_RED");
-                    break;
-        
-                case 'MATRIX':
-                    const canvas = document.getElementById('matrix-canvas') || createMatrixCanvas();
-                    canvas.style.display = canvas.style.display === 'none' ? 'block' : 'none';
-                    log("PROTOCOL: DIGITAL_RAIN_INITIATED");
-                    break;
-        
-                case 'RICH':
-                    document.querySelectorAll('.card-price').forEach(p => {
-                        let price = parseInt(p.innerText.replace(/\s/g, ''));
-                        if (!isNaN(price)) {
-                            p.innerText = (price * 10).toLocaleString() + " ₽";
-                            p.classList.add('rich-price');
-                        }
-                    });
-                    log("EXPLOIT: INFLATION_X10_SUCCESS");
-                    break;
-        
-                case 'REVEAL':
-                    log("HIDDEN_CONTENT: FOUND", "#ffaa00");
-                    alert("🕵️ ТУТ МОГЛА БЫТЬ ТВОЯ СЕКРЕТНАЯ ФОТКА ИЛИ ССЫЛКА!");
-                    break;
-        
-                case 'CLEAR':
-                    termHistory.innerHTML = '';
-                    log("SYSTEM: LOGS_PURGED");
-                    break;
-        
-                default:
-                    log(`ERROR: COMMAND '${cmd}' NOT FOUND. TRY 'HELP'`, "#ff5555");
-            }
-        }
-        
-        // Мини-скрипт для Матрицы
-        function createMatrixCanvas() {
-            const c = document.createElement('canvas');
-            c.id = 'matrix-canvas';
-            document.body.appendChild(c);
-            const ctx = c.getContext('2d');
-            c.width = window.innerWidth; c.height = window.innerHeight;
-            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            const fontSize = 16;
-            const columns = c.width / fontSize;
-            const drops = Array(Math.floor(columns)).fill(1);
-        
-            function draw() {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-                ctx.fillRect(0, 0, c.width, c.height);
-                ctx.fillStyle = "#0F0";
-                ctx.font = fontSize + "px arial";
-                drops.forEach((y, i) => {
-                    const text = letters[Math.floor(Math.random() * letters.length)];
-                    ctx.fillText(text, i * fontSize, y * fontSize);
-                    if (y * fontSize > c.height && Math.random() > 0.975) drops[i] = 0;
-                    drops[i]++;
-                });
-            }
-            setInterval(draw, 33);
-            return c;
-        }
-        
-        loadWishlist();
-    </script>
+    }
+
+    function getItemStatus(item) {
+        const s = item.status?.trim().toUpperCase() || '';
+        if (s === 'BOUGHT' || s === 'TRUE') return { type: 'DONE', text: 'ПОДАРЕНО', badge: '<div class="badge done">SOLD</div>' };
+        if (s.includes('.')) return { type: 'RES', text: 'ЗАНЯТО', badge: '<div class="badge res">БРОНЬ</div>' };
+        return { type: 'FREE', text: 'ЗАБРОНИРОВАТЬ', badge: '' };
+    }
+
+    function bookItem(name, btn) {
+        if (!confirm(`Забронировать "${name}"?`)) return;
+        btn.innerText = "ОТПРАВКА...";
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: CHAT_ID, text: `🚨 БРОНЬ: ${name}`, parse_mode: 'HTML' })
+        }).then(() => {
+            alert("Уведомление отправлено!");
+            btn.innerText = "ГОТОВО";
+        });
+    }
+
+    loadWishlist();
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
