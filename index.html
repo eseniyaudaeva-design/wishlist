@@ -305,6 +305,37 @@
         }
         .badge.res { background: #ffaa00; }
         .badge.done { background: #333; border: 1px solid #555; }
+
+            /* Кровавая тема */
+        body.critical-mode {
+            --accent-grad: linear-gradient(90deg, #ff0000 0%, #550000 100%);
+            --accent-rgb: 255, 0, 0;
+            background-image: radial-gradient(circle at 50% -20%, #4a0000 0%, #000000 60%);
+        }
+        body.critical-mode h1, body.critical-mode .card-tag { color: #ff0000; text-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
+        body.critical-mode .terminal-box { border-left-color: #ff0000; box-shadow: inset 0 0 20px rgba(50, 0, 0, 0.5); }
+        
+        /* Канвас для матрицы */
+        #matrix-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 99;
+            opacity: 0.3;
+            display: none;
+        }
+        
+        /* Глитч для цен */
+        .rich-price {
+            animation: glitch 0.3s infinite;
+            color: #ffaa00 !important;
+        }
+        @keyframes glitch {
+            0% { transform: skew(0deg); }
+            50% { transform: skew(10deg); color: #fff; }
+            100% { transform: skew(-10deg); }
+        }
     </style>
 </head>
 <body>
@@ -318,13 +349,19 @@
     <div class="info-container">
         <h1>АВТОРИТЕТНЫЙ СПИСОК ЖЕЛАНИЙ ☣</h1>
         
-        <div class="terminal-box">
-            <span class="cmd" style="color: #00FFA3; font-weight:bold;">> </span>
-            <span id="typewriter-text"></span><span class="cursor"></span>
-            
-            <div class="status-blink">
-                ну ты это...подари че нибудь
-            </div>
+<div class="terminal-box" onclick="document.getElementById('terminal-input').focus()">
+    <div id="terminal-history">
+        <span class="cmd" style="color: #00FFA3; font-weight:bold;">> </span>
+        <span id="typewriter-text"></span>
+    </div>
+    <div class="input-line" style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+        <span style="color: #00FFA3; font-weight: bold;">USER@HACKER:~$</span>
+        <input type="text" id="terminal-input" autocomplete="off" autofocus 
+               style="background: transparent; border: none; color: #b0fce0; outline: none; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; flex-grow: 1;">
+    </div>
+    
+    <div class="status-blink">ну ты это...подари че-нибудь]</div>
+</div>
         </div>
     </div>
 </header>
@@ -564,10 +601,102 @@
             });
         }
 
+        const termInput = document.getElementById('terminal-input');
+        const termHistory = document.getElementById('terminal-history');
+        
+        termInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const cmd = this.value.toUpperCase().trim();
+                processCommand(cmd);
+                this.value = '';
+            }
+        });
+        
+        function processCommand(cmd) {
+            const log = (text, color = "#b0fce0") => {
+                const line = document.createElement('div');
+                line.style.color = color;
+                line.innerHTML = `> ${text}`;
+                termHistory.appendChild(line);
+                // Ограничим историю, чтобы не раздувалась
+                if (termHistory.children.length > 10) termHistory.removeChild(termHistory.firstChild);
+            };
+        
+            switch(cmd) {
+                case 'HELP':
+                    log("AVAILABLE: CRITICAL_RED, MATRIX, RICH, REVEAL, CLEAR", "#00FFA3");
+                    break;
+                    
+                case 'CRITICAL_RED':
+                    document.body.classList.toggle('critical-mode');
+                    log("SYSTEM OVERRIDE: COLOR_THEME_RED");
+                    break;
+        
+                case 'MATRIX':
+                    const canvas = document.getElementById('matrix-canvas') || createMatrixCanvas();
+                    canvas.style.display = canvas.style.display === 'none' ? 'block' : 'none';
+                    log("PROTOCOL: DIGITAL_RAIN_INITIATED");
+                    break;
+        
+                case 'RICH':
+                    document.querySelectorAll('.card-price').forEach(p => {
+                        let price = parseInt(p.innerText.replace(/\s/g, ''));
+                        if (!isNaN(price)) {
+                            p.innerText = (price * 10).toLocaleString() + " ₽";
+                            p.classList.add('rich-price');
+                        }
+                    });
+                    log("EXPLOIT: INFLATION_X10_SUCCESS");
+                    break;
+        
+                case 'REVEAL':
+                    log("HIDDEN_CONTENT: FOUND", "#ffaa00");
+                    alert("🕵️ ТУТ МОГЛА БЫТЬ ТВОЯ СЕКРЕТНАЯ ФОТКА ИЛИ ССЫЛКА!");
+                    break;
+        
+                case 'CLEAR':
+                    termHistory.innerHTML = '';
+                    log("SYSTEM: LOGS_PURGED");
+                    break;
+        
+                default:
+                    log(`ERROR: COMMAND '${cmd}' NOT FOUND. TRY 'HELP'`, "#ff5555");
+            }
+        }
+        
+        // Мини-скрипт для Матрицы
+        function createMatrixCanvas() {
+            const c = document.createElement('canvas');
+            c.id = 'matrix-canvas';
+            document.body.appendChild(c);
+            const ctx = c.getContext('2d');
+            c.width = window.innerWidth; c.height = window.innerHeight;
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const fontSize = 16;
+            const columns = c.width / fontSize;
+            const drops = Array(Math.floor(columns)).fill(1);
+        
+            function draw() {
+                ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+                ctx.fillRect(0, 0, c.width, c.height);
+                ctx.fillStyle = "#0F0";
+                ctx.font = fontSize + "px arial";
+                drops.forEach((y, i) => {
+                    const text = letters[Math.floor(Math.random() * letters.length)];
+                    ctx.fillText(text, i * fontSize, y * fontSize);
+                    if (y * fontSize > c.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                });
+            }
+            setInterval(draw, 33);
+            return c;
+        }
+        
         loadWishlist();
     </script>
 </body>
 </html>
+
 
 
 
