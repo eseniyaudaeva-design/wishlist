@@ -44,39 +44,69 @@
             padding: 0 20px 100px;
         }
 
-        /* --- ШАПКА --- */
-        header {
-            text-align: center;
-            padding: 80px 20px 50px;
+/* --- КОМПАКТНЫЙ ПРОФИЛЬ (HUD STYLE) --- */
+        header.profile-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            max-width: 900px;
+            margin: 40px auto 40px; /* Отступы сверху и снизу */
+            padding: 25px;
+            
+            background: rgba(0, 20, 10, 0.6);
+            border: 1px solid rgba(0, 255, 163, 0.2);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
 
+        .avatar-container { flex-shrink: 0; }
+
         .avatar {
-            width: 140px; height: 140px;
+            width: 120px; height: 120px;
             object-fit: cover;
             border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            /* Зеленое свечение */
-            box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.4); 
-            margin-bottom: 25px;
+            border: 2px solid #00FFA3;
+            box-shadow: 0 0 25px rgba(0, 255, 163, 0.4);
+            margin: 0; 
         }
+
+        .info-container { text-align: left; }
 
         h1 {
             font-family: var(--font-head);
-            font-size: 2.2rem;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            margin: 0 0 15px 0;
             background: var(--accent-grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            /* Тень текста */
             text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5);
+            line-height: 1;
         }
 
-        .intro {
-            /* Цвет и шрифт */
-            color: #b0fce0; /* Светло-мятный, чтобы глаза не вытекли читать */
+        .terminal-text {
             font-family: var(--font-body);
             font-size: 0.85rem;
-            line-height: 1.7; /* Важно! Межстрочный интервал */
+            color: #b0fce0;
+            line-height: 1.5;
+        }
+
+        .cmd { color: #00FFA3; font-weight: bold; margin-right: 5px; }
+        .highlight { color: #fff; text-decoration: underline; text-decoration-color: #00FFA3; }
+        .status { 
+            display: block; margin-top: 8px; 
+            font-size: 0.7rem; color: rgba(0, 255, 163, 0.7); 
+            letter-spacing: 1px; animation: blink 2s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        /* Мобильная версия */
+        @media (max-width: 700px) {
+            header.profile-card { flex-direction: column; text-align: center; gap: 15px; }
+            .info-container { text-align: center; }
+            .terminal-text { text-align: center; }
+        }
             
             /* Оформление блока */
             max-width: 650px; /* Ограничиваем ширину */
@@ -257,16 +287,24 @@
 </head>
 <body>
 
-    <header>
-        <!-- Не забудь вставить ссылку на свою пиксельную аватарку сюда -->
-        <img src="https://via.placeholder.com/150/000000/FFFFFF/?text=404" alt="Я" class="avatar">
-        <h1>Wishlist 🎁</h1>
-        <p class="intro">
-    [SYSTEM LOG_2024]: Обнаружена критическая ошибка в уровне серотонина. <br><br>
-    Клинические испытания показали, что фраза «Главное не подарок, а внимание» — это ложь, придуманная жадными людьми. 
-    На самом деле, мое ментальное здоровье напрямую коррелирует с количеством полученных ништяков из этого списка. <br><br>
-    <span class="highlight">Пожалуйста, не спорьте с наукой.</span> Помогите закрыть дыру в душе качественным потреблением, иначе система уйдет в спящий режим.
-</p>
+    <header class="profile-card">
+        <!-- Аватарка слева -->
+        <div class="avatar-container">
+            <img src="https://via.placeholder.com/150" alt="Avatar" class="avatar">
+        </div>
+        
+        <!-- Текст справа -->
+        <div class="info-container">
+            <h1>Wishlist <span style="font-size: 1.5rem">🎁</span></h1>
+            
+            <div class="terminal-text">
+                <span class="cmd">> SYSTEM_LOG:</span>
+                Обнаружен дефицит серотонина. Фраза «Главное не подарок» признана устаревшей. 
+                <span class="highlight">Пожалуйста, не спорьте с наукой</span> и помогите закрыть дыру в душе.
+                <br>
+                <span class="status">[STATUS: WAITING_FOR_LOOT...]</span>
+            </div>
+        </div>
     </header>
 
     <div id="tabs-container" class="tabs-container"></div>
@@ -474,6 +512,7 @@
     </script>
 </body>
 </html>
+
 
 
 
