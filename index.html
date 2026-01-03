@@ -212,6 +212,52 @@
             z-index: 10;
             border: 1px solid black;
         }
+
+        /* --- СТИЛИ ДЛЯ ВКЛАДОК (TABS) --- */
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid var(--text-main);
+            color: var(--text-main);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            padding: 12px 18px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        /* Эффект наведения */
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Активная кнопка (выбранная) */
+        .tab-btn.active {
+            background: var(--accent);
+            color: black;
+            border-color: var(--accent);
+            box-shadow: 4px 4px 0px var(--accent-sec);
+            font-weight: bold;
+        }
+
+        /* Скрытая секция (когда фильтруем) */
+        .hidden-section {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -221,6 +267,7 @@
         <img src="https://via.placeholder.com/150/000000/FFFFFF/?text=404" alt="Я" class="avatar">
         <h1>Wishlist 🎁</h1>
         <p class="intro">SYSTEM_STATUS: ONLINE. Awaiting gifts...</p>
+        <div id="tabs-container" class="tabs-container"></div>
     </header>
 
     <div class="container" id="main-container">
@@ -238,71 +285,113 @@
         // ============================================
 
         const container = document.getElementById('main-container');
+        const tabsContainer = document.getElementById('tabs-container');
 
         function loadWishlist() {
             Papa.parse(GOOGLE_SHEET_URL, {
                 download: true,
                 header: true,
                 complete: function(results) {
-                    renderByCategories(results.data);
+                    renderSystem(results.data);
                 },
                 error: function(err) {
-                    console.error("Ошибка:", err);
-                    container.innerHTML = '<p style="color:red; text-align:center;">ERROR: LINK DISCONNECTED</p>';
+                    console.error(err);
+                    container.innerHTML = '<p style="color:red; text-align:center;">ERROR: DATA CORRUPTED</p>';
                 }
             });
         }
 
-        function renderByCategories(items) {
+        function renderSystem(items) {
             container.innerHTML = ''; 
+            tabsContainer.innerHTML = '';
 
-            // 1. Группируем товары по категориям
+            // 1. Группируем данные
             const groups = {};
             items.forEach(item => {
-                if (!item.name) return; // Пропуск пустых строк
-                
-                // Если категория не указана в таблице, кидаем в "SYSTEM_MISC"
-                let cat = item.category ? item.category.trim() : 'SYSTEM_MISC';
+                if (!item.name) return;
+                // Убираем лишние пробелы в названии категории
+                let cat = item.category ? item.category.trim().toUpperCase() : 'РАЗНОЕ';
                 if (!groups[cat]) groups[cat] = [];
                 groups[cat].push(item);
             });
 
-            // 2. Рисуем разделы
+            // 2. Рисуем КНОПКУ "ВСЕ"
+            createTabButton('ВСЕ', true); // true значит активная по умолчанию
+
+            // 3. Рисуем КНОПКИ остальных категорий
+            Object.keys(groups).forEach(catName => {
+                createTabButton(catName, false);
+            });
+
+            // 4. Рисуем САМИ СЕКЦИИ ТОВАРОВ
             Object.keys(groups).forEach(categoryName => {
-                // Заголовок раздела
+                // Обертка для всей секции (чтобы скрывать её целиком)
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'category-wrapper';
+                sectionDiv.dataset.category = categoryName; // Метка, чтобы находить её
+
+                // Заголовок
                 const title = document.createElement('h2');
                 title.className = 'category-title';
                 title.innerHTML = `> SECTION: ${categoryName}`;
-                container.appendChild(title);
+                sectionDiv.appendChild(title);
 
-                // Сетка товаров
+                // Сетка
                 const grid = document.createElement('div');
                 grid.className = 'grid';
-                
                 groups[categoryName].forEach(item => {
                     grid.appendChild(createCardHTML(item));
                 });
+                sectionDiv.appendChild(grid);
 
-                container.appendChild(grid);
+                container.appendChild(sectionDiv);
             });
-            
-            // Если таблица пустая или ошибка
-            if (Object.keys(groups).length === 0) {
-                 container.innerHTML = '<p style="text-align:center;">[DATABASE EMPTY]</p>';
-            }
         }
 
-        function createCardHTML(item) {
-            // Проверяем, куплено или нет (ищем слово TRUE или true)
-            const isDone = item.isBought && item.isBought.toLowerCase().includes('true');
+        // Функция создания кнопки вкладки
+        function createTabButton(text, isActive) {
+            const btn = document.createElement('button');
+            btn.className = `tab-btn ${isActive ? 'active' : ''}`;
+            btn.innerText = text;
             
+            btn.onclick = () => {
+                // 1. Убираем подсветку со всех кнопок
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                // 2. Подсвечиваем нажатую
+                btn.classList.add('active');
+                // 3. Фильтруем контент
+                filterContent(text);
+            };
+
+            tabsContainer.appendChild(btn);
+        }
+
+        // Логика фильтрации
+        function filterContent(categoryToShow) {
+            const allSections = document.querySelectorAll('.category-wrapper');
+            
+            allSections.forEach(section => {
+                if (categoryToShow === 'ВСЕ') {
+                    // Если выбрали ВСЕ, показываем всё
+                    section.classList.remove('hidden-section');
+                } else {
+                    // Иначе сравниваем категорию
+                    if (section.dataset.category === categoryToShow) {
+                        section.classList.remove('hidden-section'); // Показать
+                    } else {
+                        section.classList.add('hidden-section'); // Скрыть
+                    }
+                }
+            });
+        }
+
+        // Функция создания карточки (без изменений)
+        function createCardHTML(item) {
+            const isDone = item.isBought && item.isBought.toLowerCase().includes('true');
             const card = document.createElement('div');
             card.className = `card ${isDone ? 'done' : ''}`;
-            
             const btnText = isDone ? 'SOLD OUT' : 'GET IT';
             const badge = isDone ? '<div class="badge-done">SOLD</div>' : '';
-
-            // Картинка или заглушка
             const imgUrl = item.image ? item.image : 'https://media.tenor.com/images/a742875b478326087d0c754d7281f621/tenor.gif';
 
             card.innerHTML = `
@@ -320,8 +409,8 @@
             return card;
         }
 
-        // Запуск
         loadWishlist();
     </script>
 </body>
 </html>
+
