@@ -44,93 +44,115 @@
             padding: 0 20px 100px;
         }
 
-/* --- КОМПАКТНЫЙ ПРОФИЛЬ (HUD STYLE) --- */
+        /* --- НОВЫЙ СТИЛЬ ШАПКИ (HUD SYSTEM) --- */
         header.profile-card {
             display: flex;
-            align-items: center;
+            flex-direction: row; /* Строго в ряд */
+            align-items: flex-start; /* Выравнивание по верху, а не по центру */
             justify-content: center;
-            gap: 30px;
-            max-width: 900px;
-            margin: 40px auto 40px; /* Отступы сверху и снизу */
-            padding: 25px;
+            gap: 40px; /* Отступ между аватаркой и текстом */
             
-            background: rgba(0, 20, 10, 0.6);
-            border: 1px solid rgba(0, 255, 163, 0.2);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            max-width: 900px;
+            margin: 60px auto 50px;
+            padding: 35px;
+            
+            background: rgba(5, 15, 10, 0.85); /* Более плотный фон */
+            border: 1px solid rgba(0, 255, 163, 0.3);
+            border-radius: 16px;
+            
+            /* Эффект свечения рамки */
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 
+                        inset 0 0 50px rgba(0, 255, 163, 0.05);
+            backdrop-filter: blur(12px);
         }
-
-        .avatar-container { flex-shrink: 0; }
-
+        
+        /* Контейнер аватара */
+        .avatar-container { 
+            flex-shrink: 0; /* Чтобы аватар не сплющило */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
         .avatar {
-            width: 120px; height: 120px;
+            width: 140px; 
+            height: 140px;
             object-fit: cover;
-            border-radius: 50%;
+            border-radius: 12px; /* Чуть скруглим, но оставим квадратным (техно-стиль) */
             border: 2px solid #00FFA3;
-            box-shadow: 0 0 25px rgba(0, 255, 163, 0.4);
-            margin: 0; 
+            box-shadow: 0 0 20px rgba(0, 255, 163, 0.3);
+            filter: sepia(20%) hue-rotate(90deg) saturate(1.5) contrast(1.1); /* Эффект матрицы */
         }
-
-        .info-container { text-align: left; }
-
+        
+        /* Лейбл под аватаром (опционально) */
+        .avatar-label {
+            font-size: 0.6rem;
+            color: var(--text-sec);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+        
+        /* Правая часть (Текст) */
+        .info-container { 
+            flex-grow: 1; 
+            text-align: left;
+            padding-top: 5px; /* Компенсация высоты шрифта заголовка */
+        }
+        
         h1 {
             font-family: var(--font-head);
-            font-size: 2rem;
-            margin: 0 0 15px 0;
+            font-size: 1.8rem; /* Чуть меньше, чтобы не ломалось */
+            line-height: 1.4;
+            margin: 0 0 25px 0;
+            
             background: var(--accent-grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5);
-            line-height: 1;
+            filter: drop-shadow(0 0 5px rgba(0,255,163,0.4));
         }
-
-        .terminal-text {
+        
+        /* Блок системного лога (черный квадрат) */
+        .terminal-box {
+            background: rgba(0, 0, 0, 0.6);
+            border-left: 3px solid #00FFA3; /* Зеленая полоска слева */
+            padding: 15px 20px;
+            border-radius: 4px;
             font-family: var(--font-body);
             font-size: 0.85rem;
             color: #b0fce0;
-            line-height: 1.5;
+            line-height: 1.6;
+            box-shadow: inset 0 0 20px rgba(0,0,0,1);
         }
-
-        .cmd { color: #00FFA3; font-weight: bold; margin-right: 5px; }
-        .highlight { color: #fff; text-decoration: underline; text-decoration-color: #00FFA3; }
-        .status { 
-            display: block; margin-top: 8px; 
-            font-size: 0.7rem; color: rgba(0, 255, 163, 0.7); 
-            letter-spacing: 1px; animation: blink 2s infinite;
+        
+        .cmd { color: #00FFA3; font-weight: 800; margin-right: 8px; }
+        .text-body { display: block; margin-bottom: 15px; color: #ddd; }
+        .highlight-red { color: #ff5555; font-weight: bold; }
+        
+        /* Статус снизу */
+        .status-line {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 10px;
+            padding-top: 10px;
+            font-size: 0.7rem;
+            color: rgba(0, 255, 163, 0.6);
+            display: flex;
+            justify-content: space-between;
         }
-        @keyframes blink { 50% { opacity: 0.5; } }
-
-        /* Мобильная версия */
-        @media (max-width: 700px) {
-            header.profile-card { flex-direction: column; text-align: center; gap: 15px; }
+        
+        /* Адаптив для мобилок */
+        @media (max-width: 768px) {
+            header.profile-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 25px;
+            }
+            
             .info-container { text-align: center; }
-            .terminal-text { text-align: center; }
-        }
-            
-            /* Оформление блока */
-            max-width: 650px; /* Ограничиваем ширину */
-            margin: 0 auto 40px; /* Центрируем сам блок */
-            padding: 25px;
-            
-            /* Стиль терминала */
-            background: rgba(0, 20, 10, 0.6); /* Темная подложка */
-            border: 1px dashed rgba(0, 255, 163, 0.4); /* Пунктирная рамка */
-            border-left: 4px solid #00FFA3; /* Жирная полоса слева как цитата */
-            border-radius: 8px;
-            
-            /* Текст внутри */
-            text-align: left; /* Длинный текст лучше читать слева направо */
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        }
-
-        /* Класс для выделения важных фраз (используй <span class="highlight">...</span>) */
-        .highlight {
-            color: #fff;
-            background: rgba(0, 255, 163, 0.2);
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-weight: bold;
+            .terminal-box { text-align: left; /* Текст внутри лога все равно слева */ }
+            h1 { font-size: 1.4rem; }
         }
 
 /* --- ПЛАВАЮЩЕЕ МЕНЮ (DOCK) --- */
@@ -287,26 +309,42 @@
 </head>
 <body>
 
-    <header class="profile-card">
-        <!-- Аватарка слева -->
-        <div class="avatar-container">
-            <img src="https://via.placeholder.com/150" alt="Avatar" class="avatar">
-        </div>
+<header class="profile-card">
+    <!-- Аватарка -->
+    <div class="avatar-container">
+        <!-- Замени ссылку на свою аватарку -->
+        <img src="https://i.pinimg.com/originals/9a/12/35/9a123545b721831c2509176378484ba8.jpg" alt="User" class="avatar">
+        <div class="avatar-label">ID: 80085</div>
+    </div>
+    
+    <!-- Текст -->
+    <div class="info-container">
+        <h1>АВТОРИТЕТНЫЙ СПИСОК ЖЕЛАНИЙ ☣</h1>
         
-        <!-- Текст справа -->
-        <div class="info-container">
-            <h1>Авторитетный список желаний <span style="font-size: 1.5rem">🫆</span></h1>
-            
-            <div class="terminal-text">
+        <div class="terminal-box">
+            <div>
                 <span class="cmd">> SYSTEM_LOG:</span>
-- Рабинович, вы празднуете Новый год?
-- Мы – евреи, и поэтому – нет. Так что подарков не дарим. 
-                <span class="highlight">Но мы толерантные евреи, поэтому подарки принимаем.</span>
-                <br>
-                <span class="status">[STATUS: WAITING_FOR_LOOT...]</span>
+                Твое присутствие здесь не оплачено. 
+                У меня аллергия на пустые руки. 
+                Начинается отек Квинке и приступ мизантропии.
+            </div>
+            
+            <br>
+            
+            <div class="text-body">
+                <span class="cmd">> ACTION_REQUIRED:</span>
+                Требуется экстренное вмешательство. 
+                Вылечи меня. Купи мне жизнь. Или хотя бы подписку на радость.
+                <span class="highlight-red">Не будь причиной моей смерти, будь спонсором моего воскрешения.</span>
+            </div>
+
+            <div class="status-line">
+                <span>CPU: 99% STRESS</span>
+                <span style="animation: blink 1s infinite">[STATUS: CRITICAL FAILURE]</span>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
     <div id="tabs-container" class="tabs-container"></div>
     <div class="container" id="main-container">
@@ -513,6 +551,7 @@
     </script>
 </body>
 </html>
+
 
 
 
