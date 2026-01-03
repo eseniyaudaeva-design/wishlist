@@ -294,7 +294,7 @@
 
     function getItemStatus(item) {
         const s = item.status?.trim().toUpperCase() || '';
-        if (s === 'BOUGHT' || s === 'TRUE') return { type: 'DONE', text: 'ПОДАРЕНО', badge: '<div class="badge done">SOLD</div>' };
+        if (s === 'купили' || s === 'TRUE') return { type: 'DONE', text: 'ПОДАРЕНО', badge: '<div class="badge done">SOLD</div>' };
         if (s.includes('.')) return { type: 'RES', text: 'ЗАНЯТО', badge: '<div class="badge res">БРОНЬ</div>' };
         return { type: 'FREE', text: 'ЗАБРОНИРОВАТЬ', badge: '' };
     }
@@ -316,4 +316,5 @@
 </script>
 </body>
 </html>
+
 
