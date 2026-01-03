@@ -100,10 +100,28 @@
             text-shadow: 2px 2px 0px #000;
         }
 
+/* Сетка */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            /* Самая важная строчка: */
+            /* Делай столько колонок, сколько влезет, но не уже 240px каждая */
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px; /* Расстояние между карточками */
+            width: 100%;
+        }
+
+        /* ХАК: Принудительно 3 колонки на ноутбуках и компах */
+        @media (min-width: 900px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* А на широченных мониторах (больше 1200px) пусть будет 4 */
+        @media (min-width: 1300px) {
+            .grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
         .card {
@@ -408,6 +426,7 @@
     </script>
 </body>
 </html>
+
 
 
 
