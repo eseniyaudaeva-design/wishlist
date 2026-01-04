@@ -304,8 +304,24 @@
 
     function getItemStatus(item) {
         const s = item.status?.trim().toUpperCase() || '';
-        if (s === 'купили' || s === 'TRUE') return { type: 'DONE', text: 'ПОДАРЕНО', badge: '<div class="badge done">SOLD</div>' };
-        if (s.includes('.')) return { type: 'RES', text: 'ЗАНЯТО', badge: '<div class="badge res">БРОНЬ</div>' };
+
+        // Список слов, которые означают, что ПОДАРОК УЖЕ КУПЛЕН
+        const boughtWords = ['BOUGHT', 'TRUE', 'КУПИЛИ', 'КУПИЛА', 'ПОДАРЕНО', 'ГОТОВО', 'ДА'];
+        
+        // Список слов, которые означают БРОНЬ (но еще не купили)
+        const reservedWords = ['ЗАБРОНИРОВАНО', 'БРОНЬ', 'ЗАНЯТО', 'ЗАРЕЗЕРВИРОВАНО'];
+
+        // 1. Проверяем, есть ли в статусе слова про покупку
+        if (boughtWords.some(word => s.includes(word))) {
+            return { type: 'DONE', text: 'ПОДАРЕНО', badge: '<div class="badge done">SOLD</div>' };
+        } 
+
+        // 2. Проверяем, есть ли слова про бронь ИЛИ дата (наличие точки)
+        if (reservedWords.some(word => s.includes(word)) || s.includes('.')) {
+            return { type: 'RES', text: 'ЗАНЯТО', badge: '<div class="badge res">БРОНЬ</div>' };
+        }
+
+        // 3. Если пусто или ничего не подошло — значит свободно
         return { type: 'FREE', text: 'ЗАБРОНИРОВАТЬ', badge: '' };
     }
 
@@ -326,6 +342,7 @@
 </script>
 </body>
 </html>
+
 
 
 
