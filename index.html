@@ -333,7 +333,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ chat_id: CHAT_ID, text: `🚨 БРОНЬ: ${name}`, parse_mode: 'HTML' })
         }).then(() => {
-            alert("Уведомление отправлено!");
+            alert("Готово!");
             btn.innerText = "ГОТОВО";
         });
     }
@@ -342,6 +342,7 @@
 </script>
 </body>
 </html>
+
 
 
 
